@@ -20,7 +20,7 @@ Racerhistory.com is being developed as an online repository for Murray State Uni
 
 # FuelPHP
 
-- Version: 1.9 [under development]
+- [Version: 1.9 development] (https://github.com/fuel/fuel/tree/1.9/develop)
 - [Website](https://fuelphp.com/)
 - [Release Documentation](https://fuelphp.com/docs)
 - [Release API browser](https://fuelphp.com/api)
