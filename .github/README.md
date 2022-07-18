@@ -1,7 +1,7 @@
 # Racerhistory.com
 
 - Version: none
-- [Website](https://racerhistory.com/)
+- [Racerhistory.com](https://new.racerhistory.com/)
 
 ## Description
 
