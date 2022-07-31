@@ -75,7 +75,7 @@ class Info extends \Orm\Model
             $query = \DB::select('season','id')->from('season_info')->order_by('season', 'desc')->as_assoc()->execute();
             $seasons = [];
             foreach ($query as $result) {
-                $seasons[$result['season']] = $result['season']." ".Inflector::ordinalize($result['id']);
+                $seasons[$result['season']] = $result['season']." ".\Inflector::ordinalize($result['id']);
             }
             $seasons['NEW'] = 'NEW';
             

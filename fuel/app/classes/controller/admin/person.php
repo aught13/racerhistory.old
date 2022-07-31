@@ -1,10 +1,12 @@
 <?php
-class Controller_Admin_Person extends Controller_Admin
+namespace Controller\Admin;
+
+class Person extends \Controller\Admin
 {
 
 	public function action_index()
 	{
-		$query = Model_Person::query();
+		$query = \Model\Person::query();
 
 		$pagination = Pagination::forge('people_pagination', [
 			'total_items' => $query->count(),
@@ -23,7 +25,7 @@ class Controller_Admin_Person extends Controller_Admin
 
 	public function action_view($id = null)
 	{
-		$data['person'] = Model_Person::find($id);
+		$data['person'] = Model\Person::find($id);
 
 		$this->template->title = "Person";
 		$this->template->content = View::forge('admin/person/view', $data);
@@ -34,11 +36,11 @@ class Controller_Admin_Person extends Controller_Admin
 	{
 		if (Input::method() == 'POST')
 		{
-			$val = Model_Person::validate('create');
+			$val = Model\Person::validate('create');
 
 			if ($val->run())
 			{
-				$person = Model_Person::forge([
+				$person = Model\Person::forge([
 					'id' => Input::post('id'),
 					'first' => Input::post('first'),
 					'last' => Input::post('last'),
@@ -73,8 +75,8 @@ class Controller_Admin_Person extends Controller_Admin
 
 	public function action_edit($id = null)
 	{
-		$person = Model_Person::find($id);
-		$val = Model_Person::validate('edit');
+		$person = Model\Person::find($id);
+		$val = Model\Person::validate('edit');
 
 		if ($val->run())
 		{

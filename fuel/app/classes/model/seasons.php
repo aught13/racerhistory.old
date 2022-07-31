@@ -13,7 +13,7 @@
  */
 namespace Model;
 
-class seasons extends \Orm\Model
+class Season extends \Orm\Model
 {
 	protected static $_properties = [
 		'id',
@@ -66,10 +66,10 @@ class seasons extends \Orm\Model
         
         public static function menuSeasons() 
         {
-            $query = \DB::select('season_id','id')->from('seasons')->order_by('season_id', 'desc')->as_assoc()->execute();
+            $query = \DB::select('identifier','id')->from('seasons')->order_by('season_id', 'desc')->as_assoc()->execute();
             $seasons = [];
             foreach ($query as $result) {
-                $seasons[$result['season_id']] = $result['season_id']." ".Inflector::ordinalize($result['id']);
+                $seasons[$result['identifier']] = $result['identifier']." ".Inflector::ordinalize($result['id']);
             }
             $seasons['NEW'] = 'NEW';
             

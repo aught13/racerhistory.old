@@ -55,7 +55,7 @@ class Type extends \Orm\Model
 
     public static function validate($factory)
     {
-            $val = Validation::forge($factory);
+            $val = \Validation::forge($factory);
             $val->add_field('game_type_name', 'Game Type Name', 'required|max_length[162]');
             
 
@@ -69,7 +69,7 @@ class Type extends \Orm\Model
     protected static $_has_many = [
         'game' => [
             'key_from' => 'id',
-            'model_to' => 'Model_Game',
+            'model_to' => '\Model\Game',
             'key_to' => 'game_type_id',
             'cascade_save' => true,
             'cascade_delete' => false,
@@ -84,7 +84,7 @@ class Type extends \Orm\Model
         
     public static function menuTypes() 
     {
-        $query = DB::select('id', 'game_type_name','post' ,'conf')->from('game_type')->order_by('id', 'desc')->as_assoc()->execute();
+        $query = \DB::select('id', 'game_type_name','post' ,'conf')->from('game_type')->order_by('id', 'desc')->as_assoc()->execute();
         $types = [];
         foreach ($query as $result) {
             if ($result['post'] == 1) {

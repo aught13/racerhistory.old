@@ -45,20 +45,13 @@ class Person extends \Orm\Model
             'cascade_save' => true,
             'cascade_delete' => false,
         ],
-        //    'person_data' => array(
-        //        'key_from' => 'id',
-        //        'model_to' => '\Model\Person\Data',
-        //        'key_to' => 'person_id',
-        //        'cascade_save' => true,
-        //        'cascade_delete' => false,
-        //    ),
-        //    'person_info' => array(
-        //        'key_from' => 'id',
-        //        'model_to' => '\Model\Person\Info',
-        //        'key_to' => 'person_id',
-        //        'cascade_save' => true,
-        //        'cascade_delete' => false,
-        //    ),
+//            'person_data' => [
+//                'key_from' => 'id',
+//                'model_to' => '\Model\Person\metadata',
+//                'key_to' => 'person_id',
+//                'cascade_save' => true,
+//                'cascade_delete' => false,
+//            ],
         'person_post' => [
             'key_from' => 'id',
             'model_to' => '\Model\Person\Post',
@@ -68,16 +61,13 @@ class Person extends \Orm\Model
         ],
     ];
 
-    //    protected static $_eav = array(
-    //            'person_data' => array(            // we use the statistics relation to store the EAV data
-    //                'attribute' => 'data_key',        // the key column in the related table contains the attribute
-    //                'value' => 'data_value',            // the value column in the related table contains the value
-    //            ),
-    //            'person_info' => array(            // we use the statistics relation to store the EAV data
-    //                'attribute' => 'info_key',        // the key column in the related table contains the attribute
-    //                'value' => 'info_value',            // the value column in the related table contains the value
-    //            )
-    //    );
+//    protected static $_eav = [
+//        'person_metadata' => [            // we use the statistics relation to store the EAV data
+//            'attribute' => 'key',        // the key column in the related table contains the attribute
+//            'value' => 'value',            // the value column in the related table contains the value
+//        ],
+//    ];
+    
     protected static $_many_many = [
     ];
 

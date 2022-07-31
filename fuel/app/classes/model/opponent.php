@@ -45,7 +45,7 @@ class Opponent extends \Orm\Model
 	protected static $_has_many = [
             'game' => [
                 'key_from' => 'id',
-                'model_to' => 'Model_Game',
+                'model_to' => 'Model\Game',
                 'key_to' => 'opponent_id',
                 'cascade_save' => true,
                 'cascade_delete' => false,
@@ -63,7 +63,7 @@ class Opponent extends \Orm\Model
         
     public static function menuOpponent() 
     {
-        $query = DB::select('id', 'opponent_name','opponent_mascot')->from('opponent')->order_by('opponent_name', 'desc')->as_assoc()->execute();
+        $query = \DB::select('id', 'opponent_name','opponent_mascot')->from('opponent')->order_by('opponent_name', 'desc')->as_assoc()->execute();
         $types = [];
         foreach ($query as $result) {
             $types[$result['id']] = $result['opponent_name']." ".$result['opponent_mascot'];

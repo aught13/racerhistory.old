@@ -9,8 +9,9 @@
  * @copyright  2010 - 2019 Fuel Development Team
  * @link       https://fuelphp.com
  */
+namespace Controller;
 
-class Controller_Admin extends Controller_Base
+class Admin extends \Controller\Base
 {
 	public $template = 'admin/template';
 
@@ -18,20 +19,20 @@ class Controller_Admin extends Controller_Base
 	{
 		parent::before();
 
-		if (Request::active()->controller !== 'Controller_Admin' or ! in_array(Request::active()->action, ['login', 'logout']))
+		if (\Request::active()->controller !== 'Controller\Admin' or ! in_array(\Request::active()->action, ['login', 'logout']))
 		{
-			if (Auth::check())
+			if (\Auth::check())
 			{
-				$admin_group_id = Config::get('auth.driver', 'Simpleauth') == 'Ormauth' ? 6 : 100;
-				if ( ! Auth::member($admin_group_id))
+				$admin_group_id = \Config::get('auth.driver', 'Simpleauth') == 'Ormauth' ? 6 : 100;
+				if ( ! \Auth::member($admin_group_id))
 				{
-					Session::set_flash('error', e('You don\'t have access to the admin panel'));
-					Response::redirect('/');
+					\Session::set_flash('error', e('You don\'t have access to the admin panel'));
+					\Response::redirect('/');
 				}
 			}
 			else
 			{
-				Response::redirect('admin/login');
+				\Response::redirect('admin/login');
 			}
 		}
 	}
@@ -39,11 +40,11 @@ class Controller_Admin extends Controller_Base
 	public function action_login()
 	{
 		// Already logged in
-		Auth::check() and Response::redirect('admin');
+		\Auth::check() and \Response::redirect('admin');
 
-		$val = Validation::forge();
+		$val = \Validation::forge();
 
-		if (Input::method() == 'POST')
+		if (\Input::method() == 'POST')
 		{
 			$val->add('email', 'Email or Username')
 			    ->add_rule('required');
@@ -52,9 +53,9 @@ class Controller_Admin extends Controller_Base
 
 			if ($val->run())
 			{
-				if ( ! Auth::check())
+				if ( ! \Auth::check())
 				{
-					if (Auth::login(Input::post('email'), Input::post('password')))
+					if (\Auth::login(\Input::post('email'), \Input::post('password')))
 					{
 						// assign the user id that lasted updated this record
 						foreach (\Auth::verified() as $driver)
@@ -62,9 +63,9 @@ class Controller_Admin extends Controller_Base
 							if (($id = $driver->get_user_id()) !== false)
 							{
 								// credentials ok, go right in
-								$current_user = Model\Auth_User::find($id[1]);
-								Session::set_flash('success', e('Welcome, '.$current_user->username));
-								Response::redirect('admin');
+								$current_user = \Model\Auth_User::find($id[1]);
+								\Session::set_flash('success', e('Welcome, '.$current_user->username));
+								\Response::redirect('admin');
 							}
 						}
 					}
@@ -81,7 +82,7 @@ class Controller_Admin extends Controller_Base
 		}
 
 		$this->template->title = 'Login';
-		$this->template->content = View::forge('admin/login', ['val' => $val], false);
+		$this->template->content = \View::forge('admin/login', ['val' => $val], false);
 	}
 
 	/**
@@ -92,8 +93,8 @@ class Controller_Admin extends Controller_Base
 	 */
 	public function action_logout()
 	{
-		Auth::logout();
-		Response::redirect('admin');
+		\Auth::logout();
+		\Response::redirect('admin');
 	}
 
 	/**
@@ -105,7 +106,7 @@ class Controller_Admin extends Controller_Base
 	public function action_index()
 	{
 		$this->template->title = 'Dashboard';
-		$this->template->content = View::forge('admin/dashboard');
+		$this->template->content = \View::forge('admin/dashboard');
 	}
         
         public function action_register()

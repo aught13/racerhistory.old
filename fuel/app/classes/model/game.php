@@ -100,25 +100,6 @@ class Game extends \Orm\Model
         'Orm\Observer_Validation' => ['events' => ['before_insert', 'before_save']],
     ];
 
-    // public static function validate($factory)
-    // {
-    //     $val = Validation::forge($factory);
-    //     $val->add_field('id', 'Id', 'valid_string[numeric]');
-    //     $val->add_field('season', 'Season', 'required|valid_string[numeric]');
-    //     $val->add_field('game_date', 'Game Date', 'required');
-    //     $val->add_field('game_type_id', 'Game Type Id', 'valid_string[numeric]');
-    //     $val->add_field('opponent_id', 'Opponent Id', 'required|valid_string[numeric]');
-    //     $val->add_field('site_id', 'Site Id', 'required|valid_string[numeric]');
-    //     $val->add_field('hrn', 'Hrn', 'required|valid_string[numeric]');
-    //     $val->add_field('post', 'Post', 'required|valid_string[numeric]');
-    //     $val->add_field('w', 'W', 'required|valid_string[numeric]');
-    //     $val->add_field('l', 'L', 'required|valid_string[numeric]');
-    //     $val->add_field('pts_mur', 'Pts Mur', 'required|valid_string[numeric]');
-    //     $val->add_field('pts_opp', 'Pts Opp', 'required|valid_string[numeric]');
-
-    //     return $val;
-    // }
-
     protected static $_table_name = 'game';
 
     protected static $_primary_key = ['id'];

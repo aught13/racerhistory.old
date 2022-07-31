@@ -63,15 +63,6 @@ class Site extends \Orm\Model
         ],
     ];
 
-//    public static function validate($factory)
-//    {
-//        $val = Validation::forge($factory);
-//        $val->add_field('site_name', 'City', 'required|trim|valid_string[alpha,spaces]|max_length[162]');
-//        $val->add_field('site_state', 'State', 'required|trim|valid_string[alpha]|max_length[162]');
-//                $val->add_field('site_arena', 'Arena Name', '|trim|valid_string[alpha,spaces]|max_length[162]');
-
-//        return $val;
-//    }
 
     protected static $_observers = [
         'Orm\Observer_CreatedAt' => ['events' => ['before_insert'], 'mysql_timestamp' => true],
@@ -101,7 +92,7 @@ class Site extends \Orm\Model
 
     public static function menuSites()
     {
-        $query = DB::select('id', 'site_name', 'site_state', 'site_arena')->from('site')->order_by('id', 'desc')->as_assoc()->execute();
+        $query = \DB::select('id', 'site_name', 'site_state', 'site_arena')->from('site')->order_by('id', 'desc')->as_assoc()->execute();
         $types = [];
         foreach ($query as $result) {
             $types[$result['id']] = $result['site_name'] . ", " . $result['site_state'] . " - " . $result['site_arena'];

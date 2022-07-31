@@ -1,12 +1,14 @@
 <?php
-class Controller_Admin_Game extends Controller_Admin
+namespace Controller\Admin;
+
+class Game extends \Controller\Admin
 {
 
 	public function action_index()
 	{
-		$query = Model_Game::query()->related(['game_type', 'opponent', 'site'])->order_by('game_date', 'desc');
+		$query = \Model\Game::query()->related(['game_type', 'opponent', 'site'])->order_by('game_date', 'desc');
 
-		$pagination = Pagination::forge('games_pagination', [
+		$pagination = \Pagination::forge('games_pagination', [
 			'total_items' => $query->count(),
 			'uri_segment' => 'page',
                         'show_first'  => 'true',
@@ -20,30 +22,30 @@ class Controller_Admin_Game extends Controller_Admin
 		$this->template->set_global('pagination', $pagination, false);
 
 		$this->template->title   = "Games";
-		$this->template->content = View::forge('admin/game/index', $data);
+		$this->template->content = \View::forge('admin/game/index', $data);
 	}
 
 	public function action_view($id = null)
 	{
-		$data['game'] = Model_Game::find($id);
+		$data['game'] = \Model\Game::find($id);
 
 		$this->template->title   = "Game";
-		$this->template->content = View::forge('admin/game/view', $data);
+		$this->template->content = \View::forge('admin/game/view', $data);
 
 	}
 
 	public function action_create()
 	{
-            $fieldset = \Fuel\Core\Fieldset::forge('game')->add_model('Model_game')->repopulate();
+            $fieldset = \Fuel\Core\Fieldset::forge('game')->add_model('model\game')->repopulate();
 
             $form     = $fieldset->form();
             $new      = $this->createNew($fieldset->validation()->input(), $form);
             
             
-            $seasons  = Model_Season_Info::menuSeasons();
-            $types    = Model_Game_Type::menuTypes();
-            $opponent = Model_Opponent::menuOpponent();
-            $sites    = Model_Site::menuSites();
+            $seasons  = \Model\Season\Info::menuSeasons();
+            $types    = \Model\Game\Type::menuTypes();
+            $opponent = \Model\Opponent::menuOpponent();
+            $sites    = \Model\Site::menuSites();
             
             $new->field('season')->set_options($seasons);
             $new->field('game_type_id')->set_options($types);
@@ -59,7 +61,7 @@ class Controller_Admin_Game extends Controller_Admin
                 if($this->gameValidation($fields) == true)
                 {
 
-                    $game = new Model_Game;
+                    $game = new \Model\Game;
                     $game->season       = $fields['season'];
                     $game->game_date    = $fields['game_date'];
                     $game->game_type_id = $fields['game_type_id'];
@@ -68,25 +70,27 @@ class Controller_Admin_Game extends Controller_Admin
                     $game->hrn          = $fields['hrn'];
                     $game->post         = $fields['post'];
                     $game->w            = $fields['w'];
-                    $game->l            = $fields['l'];
+                    $game->l            = $fields['l'];                    
+                    $game->pts_mur      = $fields['pts_mur'];
+                    $game->pts_opp      = $fields['pts_opp'];
 
                 }
 
                 if ((isset($game)) && ($game->save()))
                 {
-                    Session::set_flash('success', e('Added game #'.$game->id.'.'));
+                    \Session::set_flash('success', e('Added game #'.$game->id.'.'));
 
-                    Response::redirect('admin/game/edit/'.$game->id);
+                    \Response::redirect('admin/game/edit/'.$game->id);
                 }
                 else
                 {
-                Session::set_flash('error', e('Could not save game.'));                    
+                \Session::set_flash('error', e('Could not save game.'));                    
                 }
                 
             }
             else
             {
-                Session::set_flash('error', e($fieldset->validation()->error()));
+                \Session::set_flash('error', e($fieldset->validation()->error()));
                 
             }
             
@@ -100,14 +104,14 @@ class Controller_Admin_Game extends Controller_Admin
 
             if ($id == null)
             {
-                Session::set_flash('error', e('Select a game to edit!'));
+                \Session::set_flash('error', e('Select a game to edit!'));
 
-                Response::redirect('admin/game');
+                \Response::redirect('admin/game');
             }
             else
             {
-                $game     = \Model_Game::find($id, ['realted' => ['game_meta']]);
-                $fieldset = \Fuel\Core\Fieldset::forge()->add_model('Model_game');
+                $game     = \Model\Game::find($id, ['realted' => ['game_meta']]);
+                $fieldset = \Fuel\Core\Fieldset::forge()->add_model('model\game');
             }
             
             $fieldset->add_before('mur_rank', 'Murray Rank', [], [], 'opponent_id');
@@ -123,10 +127,10 @@ class Controller_Admin_Game extends Controller_Admin
             }
             $form     = $fieldset->form();
             $new      = $this->createNew($fieldset->validation()->input(), $form);
-            $seasons  = Model_Season_Info::menuSeasons();
-            $types    = Model_Game_Type::menuTypes();
-            $opponent = Model_Opponent::menuOpponent();
-            $sites    = Model_Site::menuSites();
+            $seasons  = \Model\Season\Info::menuSeasons();
+            $types    = \Model\Game\Type::menuTypes();
+            $opponent = \Model\Opponent::menuOpponent();
+            $sites    = \Model\Site::menuSites();
             
             $new->field('season')->set_options($seasons);
             $new->field('game_type_id')->set_options($types);
@@ -159,22 +163,22 @@ class Controller_Admin_Game extends Controller_Admin
                 if ($game->save())
                 {
                     
-                    Session::set_flash('success', e('Saved game #'.$game->id.'.'));
+                    \Session::set_flash('success', e('Saved game #'.$game->id.'.'));
 
-                    Response::redirect('admin/game/edit/'.$game->id);
+                    \Response::redirect('admin/game/edit/'.$game->id);
                 }
                 else
                 {
-                    Session::set_flash('error', e('Could not save game.'));
+                    \Session::set_flash('error', e('Could not save game.'));
 
-                    Response::redirect('admin/game/edit/'.$game->id,true);                    
+                    \Response::redirect('admin/game/edit/'.$game->id,true);                    
                 }
             }
 
             else
             {
               
-                    Session::set_flash('error', e($fieldset->validation()->error()));
+                    \Session::set_flash('error', e($fieldset->validation()->error()));
             }
             
             $this->template->title = "Edit Game";
@@ -183,19 +187,19 @@ class Controller_Admin_Game extends Controller_Admin
 
 	public function action_delete($id = null)
 	{
-		if ($game = Model_Game::find($id))
+		if ($game = \Model\Game::find($id))
 		{
 			$game->delete();
 
-			Session::set_flash('success', e('Deleted game #'.$id));
+			\Session::set_flash('success', e('Deleted game #'.$id));
 		}
 
 		else
 		{
-			Session::set_flash('error', e('Could not delete game #'.$id));
+			\Session::set_flash('error', e('Could not delete game #'.$id));
 		}
 
-		Response::redirect('admin/game');
+		\Response::redirect('admin/game');
 
 	}
         
@@ -206,13 +210,13 @@ class Controller_Admin_Game extends Controller_Admin
                 {
                     if ($key == "season")
                     {
-                        $newfieldset->add_model('Model_season_info');
+                        $newfieldset->add_model('model\season\info');
                     }
                     else
                     {
                         $trim     = str_replace("_id", "", $key);
-                        $model    = 'Model_'.$trim;
-                        $fieldset = \Fuel\Core\Fieldset::forge($trim)->add_model('Model_'.$trim)->repopulate();
+                        $model    = '\\model\\'.$trim;
+                        $fieldset = \Fuel\Core\Fieldset::forge($trim)->add_model('model\\'.$trim)->repopulate();
                         
                         if($fieldset->validation()->run() == true)
                         {
@@ -227,7 +231,7 @@ class Controller_Admin_Game extends Controller_Admin
 
                             if ($new and $new->save())
                             {
-                                Session::set_flash('success', e('Added game type #'.$new->id.'.'));
+                                \Session::set_flash('success', e('Added game type #'.$new->id.'.'));
 
                                 $form->field($key)->set_value($new->id);
                                 $form->add('new' , '' , ['type' => 'hidden', 'value' => 'true']);
@@ -247,19 +251,19 @@ class Controller_Admin_Game extends Controller_Admin
         private function gameValidation($param) 
         {
             $pass = true;
-            if (($param['w'] == 1) && ($param['l'] == 1))
+            if (($param ['w'] == 1) && ($param ['l'] == 1))
             {
                 $pass = false;
             }   
-            elseif (($param['w'] == 1) && ($param['pts_opp'] > $param['pts_mur'])) 
+            elseif (($param ['w'] == 1) && ($param ['pts_opp'] > $param ['pts_mur'])) 
             {
                 $pass = false;
             }   
-            elseif (($param['l'] == 0) && ($param['w'] == 0) ) 
+            elseif (($param ['l'] == 0) && ($param ['w'] == 0) ) 
             {
                 $pass = false;
             }   
-            elseif (($param['l'] == 1) && ($param['pts_opp'] < $param['pts_mur']))
+            elseif (($param ['l'] == 1) && ($param ['pts_opp'] < $param ['pts_mur']))
             {
                 $pass = false;
             }
@@ -268,16 +272,16 @@ class Controller_Admin_Game extends Controller_Admin
         
         private function metaValidation($param) 
         {
-            if ((!is_numeric($param['mur_rank'])) || ($param['mur_rank'] < 0))
+            if ((!is_numeric($param ['mur_rank'])) || ($param ['mur_rank'] < 0))
             {
-                $param['mur_rank'] = null;
+                $param ['mur_rank'] = null;
             }
-            if ((!is_numeric($param['opp_rank'])) || ($param['opp_rank'] < 0))
+            if ((!is_numeric($param ['opp_rank'])) || ($param ['opp_rank'] < 0))
             {
-                $param['opp_rank'] = null;
+                $param ['opp_rank'] = null;
             }
             
             return $param;
         }
-
 }
+
