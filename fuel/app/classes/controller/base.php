@@ -9,8 +9,9 @@
  * @copyright  2010 - 2019 Fuel Development Team
  * @link       https://fuelphp.com
  */
+namespace Controller;
 
-class Controller_Base extends Controller_Template
+class Base extends \Fuel\Core\Controller_Template
 {
 	public function before()
 	{
@@ -28,7 +29,7 @@ class Controller_Base extends Controller_Template
 		}
 
 		// Set a global variable so views can use it
-		View::set_global('current_user', $this->current_user);
+		\View::set_global('current_user', $this->current_user);
 	}
 
 }

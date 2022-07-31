@@ -5,7 +5,9 @@
  * @author Patrick Foltz
  * @todo add functionality for old links with action_get() method
  */
-class Controller_Seasons extends Controller_template
+namespace Controller;
+
+class Seasons extends \Controller\Base
 {
 
     /**
@@ -16,9 +18,9 @@ class Controller_Seasons extends Controller_template
      */
     
     public function action_index() {
-        $record = Model_Seasons::get_season_record();
+        $record = \Model\Seasons::get_season_record();
         $this->template->title = "Seasons";
-        $this->template->content = View::forge('seasons/index', ['record' => $record]);
+        $this->template->content = \View::forge('seasons/index', ['record' => $record]);
     }
 
     /**
@@ -32,25 +34,25 @@ class Controller_Seasons extends Controller_template
     public function action_view($id = null)	{
         is_null($id) and Response::redirect('seasons');
 
-        if ( ! $data = Model_Seasons::get_season_info($id)) 
+        if ( ! $data = \Model\Seasons::get_season_info($id)) 
         {
             Session::set_flash('error', 'Could not find season_info #'.$id);
             Response::redirect('seasons');
         }
-        if ( ! $record = Model_Seasons::get_season_record($id)) {
+        if ( ! $record = \Model\Seasons::get_season_record($id)) {
             Session::set_flash('error', 'Could not find season');
             Response::redirect('seasons');
         }
-        if ( ! $games = Model_Game::Season_Games($id)) {
+        if ( ! $games = \Model\Game::Season_Games($id)) {
             Session::set_flash('error', 'Could not find games');
             Response::redirect('seasons');
         }
-        $nav['from'] = intval(Model_Seasons::get_from());
-        $nav['till'] = intval(Model_Seasons::get_till());
+        $nav['from'] = intval(\Model\Seasons::get_from());
+        $nav['till'] = intval(\Model\Seasons::get_till());
         $nav['season'] = intval($id);
         $this->template->title = "";
-        $this->template->sidenav = View::forge('seasons/sidenav', $nav);
-        $this->template->content = View::forge('seasons/view', ['record' => $record , 'season_info' => $data, 'games' => $games ]);
+        $this->template->sidenav = \View::forge('seasons/sidenav', $nav);
+        $this->template->content = \View::forge('seasons/view', ['record' => $record , 'season_info' => $data, 'games' => $games ]);
     }
 
 }
