@@ -1,6 +1,7 @@
 <?php
+namespace Model\Game;
 
-class Model_Game_Meta extends \Orm\Model
+class Meta extends \Orm\Model
 {
 	protected static $_properties = [
 		'id',

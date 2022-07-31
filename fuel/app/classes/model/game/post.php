@@ -1,6 +1,7 @@
 <?php
+namespace Model\Game;
 
-class Model_Game_Post extends \Orm\Model
+class Post extends \Orm\Model
 {
 	protected static $_properties = [
 		'id',
@@ -16,7 +17,7 @@ class Model_Game_Post extends \Orm\Model
 
 	public static function validate($factory)
 	{
-		$val = Validation::forge($factory);
+		$val = \Validation::forge($factory);
 		$val->add_field('id', 'Id', 'required|valid_string[numeric]');
 		$val->add_field('game_id', 'Game Id', 'required|valid_string[numeric]');
 		$val->add_field('post_id', 'Post Id', 'required|valid_string[numeric]');
@@ -31,7 +32,7 @@ class Model_Game_Post extends \Orm\Model
 	protected static $_has_one = [
             'post' => [
                 'key_from' => 'post_id',
-                'model_to' => 'Model_Post',
+                'model_to' => '\Model\Post',
                 'key_to' => 'id',
                 'cascade_save' => true,
                 'cascade_delete' => true,
@@ -41,7 +42,7 @@ class Model_Game_Post extends \Orm\Model
 	protected static $_belongs_to = [
             'game' => [
                 'key_from' => 'game_id',
-                'model_to' => 'Model_Game',
+                'model_to' => '\Model\Game',
                 'key_to' => 'id',
                 'cascade_save' => true,
                 'cascade_delete' => false,

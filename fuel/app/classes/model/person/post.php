@@ -1,7 +1,7 @@
 <?php
+namespace Model\Person;
 
-
-class Model_Person_Post extends \Orm\Model
+class Post extends \Orm\Model
 {
 	protected static $_properties = [
 		'id',
@@ -14,7 +14,7 @@ class Model_Person_Post extends \Orm\Model
 
 	public static function validate($factory)
 	{
-		$val = Validation::forge($factory);
+		$val = \Validation::forge($factory);
 		$val->add_field('id', 'Id', 'required|valid_string[numeric]');
 		$val->add_field('person_id', 'Person Id', 'required|valid_string[numeric]');
 		$val->add_field('post_id', 'Post Id', 'required|valid_string[numeric]');
@@ -29,7 +29,7 @@ class Model_Person_Post extends \Orm\Model
 	protected static $_has_one = [
             'post' => [
                 'key_from' => 'post_id',
-                'model_to' => 'Model_Post',
+                'model_to' => '\Model\Post',
                 'key_to' => 'id',
                 'cascade_save' => true,
                 'cascade_delete' => true,
@@ -39,7 +39,7 @@ class Model_Person_Post extends \Orm\Model
 	protected static $_belongs_to = [
             'person' => [
                 'key_from' => 'person_id',
-                'model_to' => 'Model_Person',
+                'model_to' => '\Model\Person',
                 'key_to' => 'id',
                 'cascade_save' => true,
                 'cascade_delete' => false,

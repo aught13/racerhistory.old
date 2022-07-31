@@ -1,6 +1,7 @@
 <?php
+namespace Model;
 
-class Model_Game extends \Orm\Model
+class Game extends \Orm\Model
 
 {
     protected static $_properties = [
@@ -125,7 +126,7 @@ class Model_Game extends \Orm\Model
     protected static $_has_many = [
         'game_meta' => [
             'key_from' => 'id',
-            'model_to' => 'Model_Game_Meta',
+            'model_to' => '\Model\Game\Meta',
             'key_to' => 'game_id',
             'cascade_save' => true,
             'cascade_delete' => false,
@@ -145,21 +146,21 @@ class Model_Game extends \Orm\Model
     protected static $_belongs_to = [
         'game_type' => [
             'key_from' => 'game_type_id',
-            'model_to' => 'Model_Game_Type',
+            'model_to' => '\Model\Game\Type',
             'key_to' => 'id',
             'cascade_save' => true,
             'cascade_delete' => false,
         ],
         'opponent' => [
             'key_from' => 'opponent_id',
-            'model_to' => 'Model_Opponent',
+            'model_to' => '\Model\Opponent',
             'key_to' => 'id',
             'cascade_save' => true,
             'cascade_delete' => false,
         ],
         'site' => [
             'key_from' => 'site_id',
-            'model_to' => 'Model_Site',
+            'model_to' => '\Model\Site',
             'key_to' => 'id',
             'cascade_save' => true,
             'cascade_delete' => false,
@@ -168,14 +169,14 @@ class Model_Game extends \Orm\Model
 
     public static function image($id)
     {
-        $image['photo'] = DB::select('photo')->from('person')->where('id', '=', $id)->as_object()->execute();
+        $image['photo'] = \DB::select('photo')->from('person')->where('id', '=', $id)->as_object()->execute();
         return $image;
 
     }
 
     public static function season_games($param = null)
     {
-        $games = Model_Game::find('all', [
+        $games = \Model\Game::find('all', [
             'where' => [
                 ['season', $param],
             ],
@@ -185,14 +186,14 @@ class Model_Game extends \Orm\Model
 
     public static function all_games()
     {
-        $games = Model_Game::find('all');
+        $games = \Model\Game::find('all');
         return $games;
 
     }
 
     public static function get_game($param = null)
     {
-        $game = Model_Game::find('all', [
+        $game = \Model\Game::find('all', [
             'where' => [
                 ['id', $param],
             ],

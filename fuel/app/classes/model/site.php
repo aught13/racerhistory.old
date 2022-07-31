@@ -1,6 +1,7 @@
 <?php
+namespace Model;
 
-class Model_Site extends \Orm\Model
+class Site extends \Orm\Model
 
 {
     public static $_properties = [

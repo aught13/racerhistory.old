@@ -1,7 +1,9 @@
 <?php
 use Orm\Model;
 
-class Model_Opponent_Season_Total extends Model
+namespace Model\Opponent\Season;
+
+class Total extends Model
 {
 	protected static $_properties = [
 		'id',

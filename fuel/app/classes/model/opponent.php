@@ -1,6 +1,7 @@
 <?php
+namespace Model;
 
-class Model_Opponent extends \Orm\Model
+class Opponent extends \Orm\Model
 {
 	protected static $_properties = [
 		"id" => [

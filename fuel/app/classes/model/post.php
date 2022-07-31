@@ -1,6 +1,7 @@
 <?php
+namespace Model;
 
-class Model_Post extends \Orm\Model
+class Post extends \Orm\Model
 {
     protected static $_properties = [
         "id",
@@ -56,21 +57,21 @@ class Model_Post extends \Orm\Model
     protected static $_belongs_to = [
         'person_post' => [
             'key_from' => 'post_id',
-            'model_to' => 'Model_Person_Post',
+            'model_to' => '\Model\Person\Post',
             'key_to' => 'id',
             'cascade_save' => true,
             'cascade_delete' => true,
        ],
         'game_post' => [
             'key_from' => 'id',
-            'model_to' => 'Model_Game_Post',
+            'model_to' => '\Model\Game\Post',
             'key_to' => 'post_id',
             'cascade_save' => true,
             'cascade_delete' => true,
        ],
         'season_post' => [
             'key_from' => 'id',
-            'model_to' => 'Model_Season_Post',
+            'model_to' => '\Model\Season\Post',
             'key_to' => 'post_id',
             'cascade_save' => true,
             'cascade_delete' => true,

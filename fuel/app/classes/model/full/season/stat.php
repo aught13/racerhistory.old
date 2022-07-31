@@ -1,5 +1,7 @@
 <?php
-class Model_Full_Season_Stat extends \Orm\Model
+namespace Model\Full\Season;
+
+class Stat extends \Orm\Model
 {
 	protected static $_properties = [
                 'id',
@@ -47,14 +49,14 @@ class Model_Full_Season_Stat extends \Orm\Model
 	protected static $_belongs_to = [
             'person' => [
                 'key_from' => 'person_id',
-                'model_to' => 'Model_Person',
+                'model_to' => '\Model\Person',
                 'key_to' => 'id',
                 'cascade_save' => true,
                 'cascade_delete' => false,
             ],
             'season_info' => [
                 'key_from' => 'season_id',
-                'model_to' => 'Model_Season_Info',
+                'model_to' => '\Model\Season\Info',
                 'key_to' => 'season',
                 'cascade_save' => true,
                 'cascade_delete' => false,

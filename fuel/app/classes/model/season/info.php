@@ -1,6 +1,7 @@
 <?php
+namespace Model\Season;
 
-class Model_Season_Info extends \Orm\Model
+class Info extends \Orm\Model
 {
 	protected static $_properties = [
 		'id',
@@ -32,21 +33,21 @@ class Model_Season_Info extends \Orm\Model
 	protected static $_has_many = [
             'player_season_stats' => [
                 'key_from' => 'season',
-                'model_to' => 'Model_Player_Season_Stat',
+                'model_to' => '\Model\Player\Season\Stat',
                 'key_to' => 'season_id',
                 'cascade_save' => true,
                 'cascade_delete' => false,
             ],
             'full_season_stats' => [
                 'key_from' => 'season',
-                'model_to' => 'Model_Full_Season_Stat',
+                'model_to' => '\Model\Full\Season\Stat',
                 'key_to' => 'season_id',
                 'cascade_save' => true,
                 'cascade_delete' => false,
             ],
             'game' => [
                 'key_from' => 'season',
-                'model_to' => 'Model_Game',
+                'model_to' => '\Model\Game',
                 'key_to' => 'season',
                 'cascade_save' => true,
                 'cascade_delete' => false,
@@ -59,7 +60,7 @@ class Model_Season_Info extends \Orm\Model
 	protected static $_has_one = [            
             'season_total_stats' => [
                 'key_from' => 'season',
-                'model_to' => 'Model_Season_Total_Stat',
+                'model_to' => '\Model\Season\Total\Stat',
                 'key_to' => 'season_id',
                 'cascade_save' => true,
                 'cascade_delete' => false,
@@ -71,7 +72,7 @@ class Model_Season_Info extends \Orm\Model
         
         public static function menuSeasons() 
         {
-            $query = DB::select('season','id')->from('season_info')->order_by('season', 'desc')->as_assoc()->execute();
+            $query = \DB::select('season','id')->from('season_info')->order_by('season', 'desc')->as_assoc()->execute();
             $seasons = [];
             foreach ($query as $result) {
                 $seasons[$result['season']] = $result['season']." ".Inflector::ordinalize($result['id']);

@@ -1,6 +1,7 @@
 <?php
+namespace Model;
 
-class Model_Team extends \Orm\Model
+class Team extends \Orm\Model
 {
     protected static $_properties = [
         "id", 

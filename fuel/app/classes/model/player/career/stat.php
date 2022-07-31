@@ -1,5 +1,7 @@
 <?php
-class Model_Player_Career_Stat extends \Orm\Model
+namespace Model\Player\Career;
+
+class Stat extends \Orm\Model
 {
 	protected static $_properties = [
                 'id',
@@ -48,7 +50,7 @@ class Model_Player_Career_Stat extends \Orm\Model
 	protected static $_belongs_to = [
             'person' => [
                 'key_from' => 'person_id',
-                'model_to' => 'Model_Person',
+                'model_to' => '\Model\Person',
                 'key_to' => 'id',
                 'cascade_save' => true,
                 'cascade_delete' => false,

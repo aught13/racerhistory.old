@@ -1,6 +1,7 @@
 <?php
+namespace Model;
 
-class Model_Person extends \Orm\Model
+class Person extends \Orm\Model
 
 {
     protected static $_properties = [
@@ -32,35 +33,35 @@ class Model_Person extends \Orm\Model
     protected static $_has_many = [
         'player_season_stats' => [
             'key_from' => 'id',
-            'model_to' => 'Model_Player_Season_Stat',
+            'model_to' => '\Model\Player\Season\Stat',
             'key_to' => 'person_id',
             'cascade_save' => true,
             'cascade_delete' => false,
         ],
         'full_season_stats' => [
             'key_from' => 'id',
-            'model_to' => 'Model_Full_Season_Stat',
+            'model_to' => '\Model\Full\Season\Stat',
             'key_to' => 'person_id',
             'cascade_save' => true,
             'cascade_delete' => false,
         ],
         //    'person_data' => array(
         //        'key_from' => 'id',
-        //        'model_to' => 'Model_Person_Data',
+        //        'model_to' => '\Model\Person\Data',
         //        'key_to' => 'person_id',
         //        'cascade_save' => true,
         //        'cascade_delete' => false,
         //    ),
         //    'person_info' => array(
         //        'key_from' => 'id',
-        //        'model_to' => 'Model_Person_Info',
+        //        'model_to' => '\Model\Person\Info',
         //        'key_to' => 'person_id',
         //        'cascade_save' => true,
         //        'cascade_delete' => false,
         //    ),
         'person_post' => [
             'key_from' => 'id',
-            'model_to' => 'Model_Person_Post',
+            'model_to' => '\Model\Person\Post',
             'key_to' => 'person_id',
             'cascade_save' => true,
             'cascade_delete' => false,
@@ -88,7 +89,7 @@ class Model_Person extends \Orm\Model
 
     public static function image($id)
     {
-        $image['photo'] = DB::select('photo')->from('person')->where('id', '=', $id)->as_object()->execute();
+        $image['photo'] = \DB::select('photo')->from('person')->where('id', '=', $id)->as_object()->execute();
         return $image;
 
     }

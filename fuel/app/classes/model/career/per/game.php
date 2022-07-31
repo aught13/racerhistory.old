@@ -1,5 +1,7 @@
 <?php
-class Model_Career_Per_Game extends \Orm\Model
+namespace Model\Career\Per;
+
+class Game extends \Orm\Model
 {
 	protected static $_properties = [
 		'id',

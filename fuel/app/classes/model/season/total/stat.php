@@ -1,5 +1,7 @@
 <?php
-class Model_Season_Total_Stat extends \Orm\Model
+namespace Model\Season\Total;
+
+class Stat extends \Orm\Model
 {
 	protected static $_properties = [
                 'id',
