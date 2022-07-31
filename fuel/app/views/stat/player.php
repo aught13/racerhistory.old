@@ -33,56 +33,56 @@
         <?php foreach ($player_season_stats as $item): ?>
         <tr>
             <td><?= $item->season_id; ?></td>
-            <td><?= $item->GP; ?></td>
-            <td><?= $item->GS; ?></td>
-            <td><?= $item->MIN; ?></td>
-            <td><?= $item->FGM; ?></td>
-            <td><?= $item->FGA; ?></td>
-            <td><?= $item->FGP; ?></td>
-            <td><?= $item->TPM; ?></td>
-            <td><?= $item->TPA; ?></td>
-            <td><?= $item->TPP; ?></td>
-            <td><?= $item->FTM; ?></td>
-            <td><?= $item->FTA; ?></td>
-            <td><?= $item->FTP; ?></td>
-            <td><?= $item->ORB; ?></td>
-            <td><?= $item->DRB; ?></td>
-            <td><?= $item->RB; ?></td>
-            <td><?= $item->PF; ?></td>
-            <td><?= $item->AST; ?></td>
-            <td><?= $item->TRN; ?></td>
-            <td><?= $item->ATT; ?></td>
-            <td><?= $item->BLK; ?></td>
-            <td><?= $item->STL; ?></td>
-            <td><?= $item->PTS; ?></td>
+            <td><?= ($item->GP ?: '-'); ?></td>
+            <td><?= ($item->GS ?: '-'); ?></td>
+            <td><?= ($item->MIN ?: '-'); ?></td>
+            <td><?= ($item->FGM ?: '-'); ?></td>
+            <td><?= ($item->FGA ?: '-'); ?></td>
+            <td><?= ($item->FGP ?: '-'); ?></td>
+            <td><?= ($item->TPM ?: '-'); ?></td>
+            <td><?= ($item->TPA ?: '-'); ?></td>
+            <td><?= ($item->TPP ?: '-'); ?></td>
+            <td><?= ($item->FTM ?: '-'); ?></td>
+            <td><?= ($item->FTA ?: '-'); ?></td>
+            <td><?= ($item->FTP ?: '-'); ?></td>
+            <td><?= ($item->ORB ?: '-'); ?></td>
+            <td><?= ($item->DRB ?: '-'); ?></td>
+            <td><?= ($item->RB ?: '-'); ?></td>
+            <td><?= ($item->PF ?: '-'); ?></td>
+            <td><?= ($item->AST ?: '-'); ?></td>
+            <td><?= ($item->TRN ?: '-'); ?></td>
+            <td><?= ($item->ATT ?: '-'); ?></td>
+            <td><?= ($item->BLK ?: '-'); ?></td>
+            <td><?= ($item->STL ?: '-'); ?></td>
+            <td><?= ($item->PTS ?: '-'); ?></td>
 
         </tr>
         <?php endforeach; ?>
         <?php foreach ($player_career_stats as $item): ?>
         <tr style="font-weight: bold">
             <td>TOTAL</td>
-            <td><?= $item->GP; ?></td>
-            <td><?= $item->GS; ?></td>
-            <td><?= $item->MIN; ?></td>
-            <td><?= $item->FGM; ?></td>
-            <td><?= $item->FGA; ?></td>
-            <td><?= $item->FGP; ?></td>
-            <td><?= $item->TPM; ?></td>
-            <td><?= $item->TPA; ?></td>
-            <td><?= $item->TPP; ?></td>
-            <td><?= $item->FTM; ?></td>
-            <td><?= $item->FTA; ?></td>
-            <td><?= $item->FTP; ?></td>
-            <td><?= $item->ORB; ?></td>
-            <td><?= $item->DRB; ?></td>
-            <td><?= $item->RB; ?></td>
-            <td><?= $item->PF; ?></td>
-            <td><?= $item->AST; ?></td>
-            <td><?= $item->TRN; ?></td>
-            <td><?= $item->ATT; ?></td>
-            <td><?= $item->BLK; ?></td>
-            <td><?= $item->STL; ?></td>
-            <td><?= $item->PTS; ?></td>
+            <td><?= ($item->GP ?: '-'); ?></td>
+            <td><?= ($item->GS ?: '-'); ?></td>
+            <td><?= ($item->MIN ?: '-'); ?></td>
+            <td><?= ($item->FGM ?: '-'); ?></td>
+            <td><?= ($item->FGA ?: '-'); ?></td>
+            <td><?= ($item->FGP ?: '-'); ?></td>
+            <td><?= ($item->TPM ?: '-'); ?></td>
+            <td><?= ($item->TPA ?: '-'); ?></td>
+            <td><?= ($item->TPP ?: '-'); ?></td>
+            <td><?= ($item->FTM ?: '-'); ?></td>
+            <td><?= ($item->FTA ?: '-'); ?></td>
+            <td><?= ($item->FTP ?: '-'); ?></td>
+            <td><?= ($item->ORB ?: '-'); ?></td>
+            <td><?= ($item->DRB ?: '-'); ?></td>
+            <td><?= ($item->RB ?: '-'); ?></td>
+            <td><?= ($item->PF ?: '-'); ?></td>
+            <td><?= ($item->AST ?: '-'); ?></td>
+            <td><?= ($item->TRN ?: '-'); ?></td>
+            <td><?= ($item->ATT ?: '-'); ?></td>
+            <td><?= ($item->BLK ?: '-'); ?></td>
+            <td><?= ($item->STL ?: '-'); ?></td>
+            <td><?= ($item->PTS ?: '-'); ?></td>
 
         </tr>
         <?php endforeach; ?>
@@ -117,24 +117,24 @@
         <?php foreach ($player_season_stats as $item): ?>
         <tr>
             <td><?= $item->season_id; ?></td>
-            <td><?= $item->GP; ?></td>
-            <td><?= $item->GS; ?></td>
-            <td><?= number_format($item->MPG,1,'.',''); ?></td>
-            <td><?= number_format($item->FGMG,1,'.',''); ?></td>
-            <td><?= number_format($item->FGAG,1,'.',''); ?></td>
-            <td><?= number_format($item->TPMG,1,'.',''); ?></td>
-            <td><?= number_format($item->TPAG,1,'.',''); ?></td>
-            <td><?= number_format($item->FTMG,1,'.',''); ?></td>
-            <td><?= number_format($item->FTAG,1,'.',''); ?></td>
-            <td><?= number_format($item->ORBG,1,'.',''); ?></td>
-            <td><?= number_format($item->DRBG,1,'.',''); ?></td>
-            <td><?= number_format($item->RBG,1,'.',''); ?></td>
-            <td><?= number_format($item->PFG,1,'.',''); ?></td>
-            <td><?= number_format($item->ASG,1,'.',''); ?></td>
-            <td><?= number_format($item->TOG,1,'.',''); ?></td>
-            <td><?= number_format($item->BLG,1,'.',''); ?></td>
-            <td><?= number_format($item->STG,1,'.',''); ?></td>
-            <td><?= number_format($item->PPG,1,'.',''); ?></td>
+            <td><?= ($item->GP ?: '-'); ?></td>
+            <td><?= ($item->GS ?: '-'); ?></td>
+            <td><?= ($item->MPG ? number_format($item->MPG,1,'.','') :'-'); ?></td>
+            <td><?= ($item->FGMG ? number_format($item->FGMG,1,'.','') :'-'); ?></td>
+            <td><?= ($item->FGAG ? number_format($item->FGAG,1,'.','') :'-'); ?></td>
+            <td><?= ($item->TPMG ? number_format($item->TPMG,1,'.','') :'-'); ?></td>
+            <td><?= ($item->TPAG ? number_format($item->TPAG,1,'.','') :'-'); ?></td>
+            <td><?= ($item->FTMG ? number_format($item->FTMG,1,'.','') :'-'); ?></td>
+            <td><?= ($item->FTAG ? number_format($item->FTAG,1,'.','') :'-'); ?></td>
+            <td><?= ($item->ORBG ? number_format($item->ORBG,1,'.','') :'-'); ?></td>
+            <td><?= ($item->DRBG ? number_format($item->DRBG,1,'.','') :'-'); ?></td>
+            <td><?= ($item->RBG ? number_format($item->RBG,1,'.','') :'-'); ?></td>
+            <td><?= ($item->PFG ? number_format($item->PFG,1,'.','') :'-'); ?></td>
+            <td><?= ($item->ASG ? number_format($item->ASG,1,'.','') :'-'); ?></td>
+            <td><?= ($item->TOG ? number_format($item->TOG,1,'.','') :'-'); ?></td>
+            <td><?= ($item->BLG ? number_format($item->BLG,1,'.','') :'-'); ?></td>
+            <td><?= ($item->STG ? number_format($item->STG,1,'.','') :'-'); ?></td>
+            <td><?= ($item->PPG ? number_format($item->PPG,1,'.','') :'-'); ?></td>
 
         </tr>
         <?php endforeach; ?>

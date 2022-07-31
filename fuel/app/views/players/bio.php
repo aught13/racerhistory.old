@@ -1,7 +1,6 @@
 <div class="w3-row">
     <?php if ($story->person_post): ?>
     <p>
-        <strong>Posts</strong></br>
         <?php foreach ($story->person_post as $post): ?>
         <span><?=$post->post->title; ?></span>
     <div><?=$post->post->text; ?></div>

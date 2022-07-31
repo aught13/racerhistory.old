@@ -118,7 +118,7 @@ $gp=0; $points=0; $conf=0;
                                 echo $item->game_type->game_type_name.' ';
                             endif;
                         endif;
-                        if($item->game_info) :
+                        if(isset($item->notes)) :
                             echo $item->notes;
                         endif; ?>
             </td>

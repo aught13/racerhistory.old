@@ -12,20 +12,10 @@
         <h2><?=$person->first; ?> <?=$person->nick; ?> <?=$person->last; ?></h2>
         <span class="w3-large">Men's Basketball</span><br>
 
-        <?php 
-if (isset($person->height)) {
-    echo "<span>Height: ".$person->height."    </span>";
-}
-if (isset($person->weight)) {
-    echo "<span>Weight: ".$person->weight."lbs    </span>";
-}
-if (isset($person->position)) {
-    echo "<span>Position: ".$person->position." </span><br>";    
-}
-if (isset($person->hometown)) {
-    echo "<span>From: ".$person->hometown." </span>";
-}
-?>
+        <?= (isset($person->height) ? "<span>Height: ".$person->height."    </span>" : "") ?>
+        <?= (isset($person->weight) ? "<span>Weight: ".$person->weight."lbs    </span>" : "") ?>
+        <?= (isset($person->position) ? "<span>Position: ".$person->position." </span><br>" : "") ?>
+        <?= (isset($person->hometown) ? "<span>From: ".$person->hometown." </span>" : "") ?>
 
     </div>
 </div>
