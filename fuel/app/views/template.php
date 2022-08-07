@@ -13,14 +13,15 @@
 </head>
 
 <body>
-    <nav class="w3-top racer-gold">
+    <nav id="topNav" class="w3-top racer-gold">
         <div class="w3-bar w3-large w3-auto">
             <a id="scroll" class="w3-bar-item w3-button w3-hide" href="/"><img class=""
                     style="width: 100%; max-width: 540px; height: 100%; max-height: 30px" alt="Racerhistory.com"
                     src="/assets/img/logo.png"></img></a></li>
             <a class="w3-bar-item w3-hide-small w3-button" href="/players">PLAYERS</a></li>
             <a class="w3-bar-item w3-hide-small w3-button" href="/seasons">SEASONS</a></li>
-            <a class="w3-bar-item w3-hide-small w3-button" href="/stat">STATS</a></li>
+            <a class="w3-bar-item w3-hide-small w3-button" href="/stats">STATS</a></li>
+            <a class="w3-bar-item w3-hide-small w3-button" href="/games">GAMES</a>
             <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
                 onclick="dropNav()">&#9776;</a>
         </div>

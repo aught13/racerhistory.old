@@ -100,7 +100,7 @@ class Game extends \Orm\Model
         'Orm\Observer_Validation' => ['events' => ['before_insert', 'before_save']],
     ];
 
-    protected static $_table_name = 'game';
+    protected static $_table_name = 'games';
 
     protected static $_primary_key = ['id'];
 
