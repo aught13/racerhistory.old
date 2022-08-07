@@ -44,7 +44,7 @@ class Post extends \Orm\Model
         'Orm\Observer_Validation' => ['events' => ['before_insert', 'before_save']]
     ];
 
-    protected static $_table_name = 'post';
+    protected static $_table_name = 'posts';
 
     protected static $_primary_key = ['id'];
 

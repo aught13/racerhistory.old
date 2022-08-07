@@ -9,6 +9,6 @@
     </p>
     <?php endif; ?>
     <span>
-        <?php echo Html::anchor('players', 'Back to Players').' | '.Html::anchor('stat', 'Back to Stats');?>
+        <?php echo \Html::anchor('players', 'Back to Players').' | '.\Html::anchor('stats', 'Back to Stats');?>
     </span>
 </div>

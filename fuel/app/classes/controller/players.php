@@ -41,15 +41,15 @@ class Players extends \Controller\Base
             \Session::set_flash('error', 'Could not find person');
 
         }
-        if (!$data2 = \Model\Statistics::get_plr_season($id)) {
+        if (!$data2['player_season_stats'] = \Model\Statistics::get_plr_season($id)) {
             \Session::set_flash('error', 'Could not find Stats');
         }
-        if (!$data3 = \Model\Statistics::get_plr_career($id)) {
+        if (!$data2['player_career_stats'] = \Model\Statistics::get_plr_career($id)) {
             \Session::set_flash('error', 'Could not find Stats');
         }
         $this->template->title = "";
         $this->template->content = \View::forge('players/view', ['person' => $data], false);
-        $this->template->content2 = \View::forge('stat/player', ['player_season_stats' => $data2, 'player_career_stats' => $data3]);
+        $this->template->content2 = \View::forge('stats/player', ['stats' => $data2]);
         $this->template->content3 = \View::forge('players/bio', ['story' => $data], false);
     }
 }

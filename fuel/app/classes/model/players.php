@@ -20,7 +20,7 @@ class Players extends \Model
                     (Min(s.season_id)-1) AS strt,
                     Max(s.season_id) 	AS cend
                     FROM player_season_stats AS s
-                    INNER JOIN person AS p ON p.id = s.person_id
+                    INNER JOIN persons AS p ON p.id = s.person_id
                     GROUP BY p.id
                     HAVING p.last LIKE '%".$param."%'
                     OR p.first LIKE '%".$param."%' order by cend DESC");
@@ -36,7 +36,7 @@ class Players extends \Model
         $query = \DB::query("SELECT 	
                     p.id, p.first, p.last, p.nick, s.season_id as cend, s.season_id-1 as strt
                     FROM player_season_stats AS s
-                    INNER JOIN person AS p ON p.id = s.person_id
+                    INNER JOIN persons AS p ON p.id = s.person_id
                     HAVING s.season_id = ".$param."
                     ORDER BY s.GP DESC , s.Pts DESC" );
         $result = $query->as_object()->execute();

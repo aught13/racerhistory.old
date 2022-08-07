@@ -12,21 +12,23 @@ class Stat extends \Orm\Model
 		'MIN',
 		'FGM',
 		'FGA',
+                'FGP',
 		'TPM',
 		'TPA',
+                'TPP',
 		'FTM',
 		'FTA',
+                'FTP',
 		'ORB',
 		'DRB',
 		'RB',
 		'PF',
 		'AST',
 		'TRN',
+                'ATR',
 		'BLK',
 		'STL',
 		'PTS',
-		'submitted_date',
-		'updated_date',
 	];
 
 	public static function validate($factory)
@@ -53,13 +55,11 @@ class Stat extends \Orm\Model
 		$val->add_field('BLK', 'BLK', 'required|valid_string[numeric]');
 		$val->add_field('STL', 'STL', 'required|valid_string[numeric]');
 		$val->add_field('PTS', 'PTS', 'required|valid_string[numeric]');
-		$val->add_field('submitted_date', 'Submitted Date', 'required|max_length[]');
-		$val->add_field('updated_date', 'Updated Date', 'required|max_length[]');
 
 		return $val;
 	}
 
-        protected static $_table_name = 'player_season_stats';
+        protected static $_table_name = 'full_season_stats';
 
 	protected static $_primary_key = ['id'];
 
@@ -80,10 +80,10 @@ class Stat extends \Orm\Model
                 'cascade_save' => true,
                 'cascade_delete' => false,
             ],
-            'season_info' => [
+            'team_season' => [
                 'key_from' => 'season_id',
-                'model_to' => '\Model\Season\Info',
-                'key_to' => 'season',
+                'model_to' => '\Model\Team\Season',
+                'key_to' => 'season_identifier',
                 'cascade_save' => true,
                 'cascade_delete' => false,
             ]

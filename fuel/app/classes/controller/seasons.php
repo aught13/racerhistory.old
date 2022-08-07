@@ -18,7 +18,7 @@ class Seasons extends \Controller\Base
      */
     
     public function action_index() {
-        $record = \Model\Seasons::get_season_record();
+        $record = \Model\Season::get_season_record();
         $this->template->title = "Seasons";
         $this->template->content = \View::forge('seasons/index', ['record' => $record]);
     }
@@ -34,21 +34,21 @@ class Seasons extends \Controller\Base
     public function action_view($id = null)	{
         is_null($id) and Response::redirect('seasons');
 
-        if ( ! $data = \Model\Seasons::get_season_info($id)) 
+        if ( ! $data = \Model\Season::get_season_info($id)) 
         {
-            Session::set_flash('error', 'Could not find season_info #'.$id);
-            Response::redirect('seasons');
+            \Session::set_flash('error', 'Could not find season_info #'.$id);
+            \Response::redirect('seasons');
         }
-        if ( ! $record = \Model\Seasons::get_season_record($id)) {
-            Session::set_flash('error', 'Could not find season');
-            Response::redirect('seasons');
+        if ( ! $record = \Model\Season::get_season_record($id)) {
+            \Session::set_flash('error', 'Could not find season');
+            \Response::redirect('seasons');
         }
         if ( ! $games = \Model\Game::Season_Games($id)) {
-            Session::set_flash('error', 'Could not find games');
-            Response::redirect('seasons');
+            \Session::set_flash('error', 'Could not find games');
+            \Response::redirect('seasons');
         }
-        $nav['from'] = intval(\Model\Seasons::get_from());
-        $nav['till'] = intval(\Model\Seasons::get_till());
+        $nav['from'] = intval(\Model\Season::get_from());
+        $nav['till'] = intval(\Model\Season::get_till());
         $nav['season'] = intval($id);
         $this->template->title = "";
         $this->template->sidenav = \View::forge('seasons/sidenav', $nav);

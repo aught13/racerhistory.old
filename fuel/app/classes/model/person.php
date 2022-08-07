@@ -26,7 +26,7 @@ class Person extends \Orm\Model
         return $val;
     }
 
-    protected static $_table_name = 'person';
+    protected static $_table_name = 'persons';
 
     protected static $_primary_key = ['id'];
 
@@ -38,20 +38,7 @@ class Person extends \Orm\Model
             'cascade_save' => true,
             'cascade_delete' => false,
         ],
-        'full_season_stats' => [
-            'key_from' => 'id',
-            'model_to' => '\Model\Full\Season\Stat',
-            'key_to' => 'person_id',
-            'cascade_save' => true,
-            'cascade_delete' => false,
-        ],
-//            'person_data' => [
-//                'key_from' => 'id',
-//                'model_to' => '\Model\Person\metadata',
-//                'key_to' => 'person_id',
-//                'cascade_save' => true,
-//                'cascade_delete' => false,
-//            ],
+
         'person_post' => [
             'key_from' => 'id',
             'model_to' => '\Model\Person\Post',

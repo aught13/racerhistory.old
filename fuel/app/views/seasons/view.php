@@ -35,15 +35,14 @@ $gp=0; $points=0; $conf=0;
         <?php foreach ($record as $item): ?>
         <tr>
             <td>
-                <?php if (is_object($season_info)): 
-                        echo(($season_info->season-1).' - '.$season_info->season);
-                        endif; ?> </td>
-            <td><?php echo $item->wins.'-'.$item->losses; ?></td>
-            <td><?php echo $item->homew.'-'.$item->homel; ?></td>
-            <td><?php echo $item->roadw.'-'.$item->roadl; ?></td>
-            <td><?php echo $item->neuw.'-'.$item->neul; ?></td>
-            <td><?php echo $item->confw.'-'.$item->confl; ?></td>
-            <td><?php echo $item->fin; ?></th>
+                <?= (is_object($season_info) ? (($season_info->season_identifier-1).' - '.$season_info->season_identifier):""); ?> 
+            </td>
+            <td><?= $item->wins.'-'.$item->losses; ?></td>
+            <td><?= $item->homew.'-'.$item->homel; ?></td>
+            <td><?= $item->roadw.'-'.$item->roadl; ?></td>
+            <td><?= $item->neuw.'-'.$item->neul; ?></td>
+            <td><?= $item->confw.'-'.$item->confl; ?></td>
+            <td><?= $item->fin; ?></th>
         </tr>
         <?php endforeach; ?>
         <?php endif; ?>
@@ -57,9 +56,6 @@ $gp=0; $points=0; $conf=0;
     <thead class="sticky">
         <tr>
             <th>Game date</th>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
             <th>Opponent</th>
             <th>Location</th>
             <th>W/L</th>
@@ -74,64 +70,38 @@ $gp=0; $points=0; $conf=0;
         <tr>
 
 
-            <td style="white-space: nowrap"><?php echo date_format(date_create($item->game_date), 'F d, Y'); ?></td>
-            <td><?php if (isset($item->mur_rank)):
-                            echo '#'.$item->mur_rank.' '; 
-                        endif;?>
+            <td style="white-space: nowrap">
+                <?php echo date_format(date_create($item->game_date), 'F d, Y'); ?>
             </td>
-            <td style="white-space: nowrap">Racers <?php 
-                        if ($item->hrn == 1): 
-                            echo 'vs '; elseif ($item->hrn == 3):
-                                echo 'vs ';
-                            else: echo '@ '; 
-                        endif; ?>
+            <td style="white-space: nowrap">
+                <?= (isset($item->mur_rank) ? '#'.$item->mur_rank.' ' : '');?>Murray St
+                <?= (($item->hrn == 1) || ($item->hrn == 3) ? ' vs ': ' @ '); ?>
+                <?= (isset($item->opp_rank) ? '#'.$item->opp_rank.' ': ''); ?>
+                <?= $item->opponent->opponent_name; ?>
+                <?= (isset($item->game_type->conf) ? (($item->game_type->conf == 1 && $conf=1) ? "*" : "") : ""); ?>
             </td>
-            <td><?php 
-                        if (isset($item->opp_rank)):
-                            echo '#'.$item->opp_rank.' '; 
-                        endif; ?>
-            </td>
-            <td style="white-space: nowrap"><?php 
-                        echo $item->opponent->opponent_name; 
-                        if (isset($item->game_type->conf)): 
-                            if ($item->game_type->conf == 1):
-                                echo '*';
-                                $conf=1;
-                            endif;
-                        endif; ?>
-            </td>
-            <td style="white-space: nowrap"><?php echo $item->site->site_name.', '.$item->site->site_state ?></td>
-            <td><?php if ($item->w == 1): echo 'W'; elseif 
-                        ($item->l == 1): echo 'L'; else: echo ''; endif; ?>
-            </td>
-            <td style="white-space: nowrap"><?php echo $item->pts_mur.'-'.$item->pts_opp; 
-                        if (isset($item->overtime)): 
-                            if ($item->overtime > 1):
-                                echo ' '.$item->overtime;
-                            endif;
-                            echo ' OT'; 
-                        endif;?>
-            </td>
-            <td><?php 
-                        if (isset($item->game_type->conf)):
-                            if ($item->game_type->conf != 1):
-                                echo $item->game_type->game_type_name.' ';
-                            endif;
-                        endif;
-                        if(isset($item->notes)) :
-                            echo $item->notes;
-                        endif; ?>
+            <td style="white-space: nowrap">
+                <?=$item->site->site_name.', '.$item->site->site_state ?>
             </td>
             <td>
-                <?php //echo Html::anchor('game/view/'.$item->id, '<i class="icon-eye-open"></i> View', array('class' => 'btn btn-default btn-sm')); ?>
+                <?= ($item->w == 1 ? 'W' : ($item->l == 1 ? 'L' : '')); ?>
+            </td>
+            <td style="white-space: nowrap">
+                <?= $item->pts_mur.'-'.$item->pts_opp ?>
+                <?= (isset($item->overtime) ? ($item->overtime > 1 ? " ".$item->overtime : " OT") : "" );?>
+            </td>
+            <td>
+                <?= (isset($item->game_type->conf) ? ($item->game_type->conf != 1 ? $item->game_type->game_type_name.' ' : "") : ""); ?>
+                <?= (isset($item->notes) ? $item->notes : ""); ?>
+            </td>
+            <td>
+                <?= \Html::anchor('game/view/'.$item->id, '<i class="icon-eye-open"></i> View', array('class' => 'btn btn-default btn-sm')); ?>
             </td>
         </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
-<?php if ($conf === 1):?>
-<p class="w3-right w3-small"> * Conference Game </p>
-<?php endif;?>
+<?= ($conf === 1 ? '<p class="w3-right w3-small"> * Conference Game </p>' : "");?>
 <?php else: ?>
 <p>No Games.</p>
 
@@ -170,29 +140,19 @@ $gp=0; $points=0; $conf=0;
     <tbody>
         <?php foreach ($season_info->player_season_stats as $item): ?>
         <tr>
-            <td><?= $item->person->first.' '
-                            .$item->person->last; ?>
-            </td>
+            <td><?= $item->person->first.' '.$item->person->last; ?></td>
             <td><?= $item->GP; ?></td>
             <td><?= $item->GS; ?></td>
             <td><?= $item->MIN; ?></td>
             <td><?= $item->FGM; ?></td>
             <td><?= $item->FGA; ?></td>
-            <td><?php if ($item->FGA > 0): 
-                                echo number_format(($item->FGM/$item->FGA),3,'.',''); 
-                            endif; ?>
-            </td>
+            <td><?= ($item->FGA > 0 ? number_format(($item->FGM/$item->FGA),3,'.','') : ""); ?></td>
             <td><?= $item->TPM; ?></td>
             <td><?= $item->TPA; ?></td>
-            <td><?php if ($item->TPA > 0):
-                                echo number_format(($item->TPM/$item->TPA),3,'.',''); 
-                            endif; ?></td>
+            <td><?= ($item->TPA > 0 ? number_format(($item->TPM/$item->TPA),3,'.','') : ""); ?></td>
             <td><?= $item->FTM; ?></td>
             <td><?= $item->FTA; ?></td>
-            <td><?php if ($item->FTA > 0): 
-                                echo number_format(($item->FTM/$item->FTA),3,'.',''); 
-                            endif; ?>
-            </td>
+            <td><?= ($item->FTA > 0 ? number_format(($item->FTM/$item->FTA),3,'.','') : ""); ?></td>
             <td><?= $item->ORB; ?></td>
             <td><?= $item->DRB; ?></td>
             <td><?= $item->RB; ?></td>
@@ -202,10 +162,7 @@ $gp=0; $points=0; $conf=0;
             <td><?= $item->BLK; ?></td>
             <td><?= $item->STL; ?></td>
             <td><?= $item->PTS; ?></td>
-            <td><?php if ($item->GP > 0): 
-                                echo number_format(($item->PTS/$item->GP),2,'.','');
-                            endif; ?>
-            </td>
+            <td><?= ($item->GP > 0 ? number_format(($item->PTS/$item->GP),2,'.','') : ""); ?></td>
         </tr>
         <?php endforeach; ?>
     </tbody>
@@ -216,13 +173,13 @@ $gp=0; $points=0; $conf=0;
         <td><?= $season_info->season_total_stats->MIN; ?></td>
         <td><?= $season_info->season_total_stats->FGM; ?></td>
         <td><?= $season_info->season_total_stats->FGA; ?></td>
-        <td><?= number_format($season_info->season_total_stats->FGP,3,'.','');?></td>
+        <td><?= (isset($season_info->season_total_stats->FGP) ? number_format($season_info->season_total_stats->FGP,3,'.','') : "-");?></td>
         <td><?= $season_info->season_total_stats->TPM; ?></td>
         <td><?= $season_info->season_total_stats->TPA; ?></td>
-        <td><?= number_format($season_info->season_total_stats->TPP,3,'.','');?></td>
+        <td><?= (isset($season_info->season_total_stats->TPP) ? number_format($season_info->season_total_stats->TPP,3,'.','') : "-");?></td>
         <td><?= $season_info->season_total_stats->FTM; ?></td>
         <td><?= $season_info->season_total_stats->FTA; ?></td>
-        <td><?= number_format($season_info->season_total_stats->FTP,3,'.','');?></td>
+        <td><?= (isset($season_info->season_total_stats->FTP) ? number_format($season_info->season_total_stats->FTP,3,'.','') : "-");?></td>
         <td><?= $season_info->season_total_stats->ORB; ?></td>
         <td><?= $season_info->season_total_stats->DRB; ?></td>
         <td><?= $season_info->season_total_stats->RB; ?></td>
@@ -232,7 +189,7 @@ $gp=0; $points=0; $conf=0;
         <td><?= $season_info->season_total_stats->BLK; ?></td>
         <td><?= $season_info->season_total_stats->STL; ?></td>
         <td><?= $points; ?></td>
-        <td><?= number_format(($points/$gp),2,'.','');?></td>
+        <td><?= ($gp>0 ? number_format(($points/$gp),2,'.','') : "");?></td>
         </td>
     </tr>
 
