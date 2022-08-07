@@ -1,4 +1,16 @@
 <?php
+/*
+ * Racerhistory.com software package
+ * Patrick Foltz
+ */
+
+/**
+ * Mode\Team\Seasons
+ * 
+ * Model for team season information
+ *
+ * @author Patrick Foltz
+ */
 namespace Model\Team;
 
 class Season extends \Orm\Model

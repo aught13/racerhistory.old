@@ -95,7 +95,7 @@ $gp=0; $points=0; $conf=0;
                 <?= (isset($item->notes) ? $item->notes : ""); ?>
             </td>
             <td>
-                <?= \Html::anchor('game/view/'.$item->id, '<i class="icon-eye-open"></i> View', array('class' => 'btn btn-default btn-sm')); ?>
+                <?= \Html::anchor('games/view/'.$item->id, '<i class="icon-eye-open"></i> View', array('class' => 'btn btn-default btn-sm')); ?>
             </td>
         </tr>
         <?php endforeach; ?>

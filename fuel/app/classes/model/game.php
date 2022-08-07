@@ -112,6 +112,13 @@ class Game extends \Orm\Model
             'cascade_save' => true,
             'cascade_delete' => false,
         ],
+        'game_post' => [
+            'key_from' => 'id',
+            'model_to' => '\Model\Game\Post',
+            'key_to' => 'game_id',
+            'cascade_save' => true,
+            'cascade_delete' => false,
+        ],
     ];
     protected static $_eav = [
         'game_meta' => [

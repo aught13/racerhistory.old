@@ -32,3 +32,4 @@ desktop.ini
 /fuel/app/cache/*/*
 /fuel/app/config/crypt.php
 /nbproject/private/
+/nbproject

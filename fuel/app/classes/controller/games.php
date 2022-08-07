@@ -33,7 +33,7 @@ class Games extends \Controller\Base
             ]);
 
         $this->template->title   = "Game";
-        $this->template->content = \View::forge('games/view', $data);
+        $this->template->content = \View::forge('games/view', $data, false);
 
     }
 }

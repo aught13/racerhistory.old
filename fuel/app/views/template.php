@@ -56,7 +56,7 @@
             <div class="w3-right racer-grey w3-card w3-col l2 m12 s12">
                 <div>
                     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                    <!-- Leaderboard -->
+<!--                     Leaderboard -->
                     <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6903556731799787"
                         data-ad-slot="9814065751" data-ad-format="auto" data-full-width-responsive="true"></ins>
                     <script>
@@ -95,7 +95,7 @@
             <div class="w3-auto">
                 <div style="height: inherit" class="racer-blue">
                     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                    <!-- Footer -->
+<!--                     Footer -->
                     <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6903556731799787"
                         data-ad-slot="9149427751" data-ad-format="auto" data-full-width-responsive="true"></ins>
                     <script>

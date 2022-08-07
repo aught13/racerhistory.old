@@ -1,45 +1,52 @@
-<h2>Viewing #<?php echo $game->id; ?></h2>
-<br>
+<meta name="description"
+    content="<?=$game->season; ?>,<?=$game->opponent->opponent_name; ?>,<?=$game->site->site_name; ?>, <?= $game->game_date; ?> - Murray State Basketball" />
+<meta name="keywords"
+    content="<?=$game->season; ?>,<?=$game->opponent->opponent_name; ?>,<?=$game->site->site_name; ?>, <?= $game->game_date; ?>,Murray,Racers,Basketball,NCAA" />
 
-<dl class="dl-horizontal">
-	<dt>Id</dt>
-	<dd><?php echo $game->id; ?></dd>
-	<br>
-	<dt>Season</dt>
-	<dd><?php echo $game->season; ?></dd>
-	<br>
-	<dt>Game date</dt>
-	<dd><?php echo $game->game_date; ?></dd>
-	<br>
-	<dt>Game type id</dt>
-	<dd><?php echo $game->game_type_id; ?></dd>
-	<br>
-	<dt>Opponent id</dt>
-	<dd><?php echo $game->opponent_id; ?></dd>
-	<br>
-	<dt>Site id</dt>
-	<dd><?php echo $game->site_id; ?></dd>
-	<br>
-	<dt>Hrn</dt>
-	<dd><?php echo $game->hrn; ?></dd>
-	<br>
-	<dt>Post</dt>
-	<dd><?php echo $game->post; ?></dd>
-	<br>
-	<dt>W</dt>
-	<dd><?php echo $game->w; ?></dd>
-	<br>
-	<dt>L</dt>
-	<dd><?php echo $game->l; ?></dd>
-	<br>
-	<dt>Pts mur</dt>
-	<dd><?php echo $game->pts_mur; ?></dd>
-	<br>
-	<dt>Pts opp</dt>
-	<dd><?php echo $game->pts_opp; ?></dd>
-</dl>
-
-<div class="btn-group">
-	<?php echo Html::anchor('admin/game/edit/'.$game->id, 'Edit', array('class' => 'btn btn-warning')); ?>
-	<?php echo Html::anchor('admin/game', 'Back', array('class' => 'btn btn-default')); ?>
+<div class="w3-row">    
+    <div class="w3-col w3-container m7 l8 w3-center">
+        <h1><?= $game->season-1; ?>-<?= $game->season; ?> Men's Basketball</h1>
+        <h2><?= ($game->game_type_id == '17' ? "" : "<span>".$game->game_type->game_type_name."</span>"); ?></h2>
+        <div class='w3-topbar w3-bottombar'>
+            <div class='w3-xxlarge'>
+                <span class="w3-margin-right"><?= (isset($game->mur_rank) ? '#'.$game->mur_rank.' ' : '');?>Murray St</span>
+                <span class="w3-border"><?= $game->pts_mur ?></span>
+                <span class="w3-margin"><?= (($game->hrn == 1) || ($game->hrn == 3) ? 'VS': '@'); ?></span>
+                <span class="w3-border"><?=$game->pts_opp ?></span>
+                <span class="w3-margin-left"><?= (isset($game->opp_rank) ? '#'.$game->opp_rank.' ': ''); ?><?=$game->opponent->opponent_name ?></span>
+            </div>
+        </div>
+    </div>
+    <div class="w3-col w3-container m5 l4 w3-leftbar w3-left w3-large">
+        <table class="w3-table w3-bordered">
+            <thead></thead><!-- comment -->
+            <tbody>
+                <tr><td>DATE - <?=date_format(date_create($game->game_date), 'm/d/Y'); ?></td></tr>
+                <tr><td>TIME - <?=(date_format(date_create($game->game_date), 'G') > 0 ? date_format(date_create($game->game_date), 'g:i A') : ""); ?></td></tr>
+                <tr><td>ATTENDANCE - <?=(isset($game->attendance) ? $game->attendance : ""); ?></td></tr>
+                <tr><td>SITE - <?=(isset($game->site->site_arena) ? $game->site->site_arena." ".$game->site->site_name.", ".$game->site->site_state : $game->site->site_name.", ".$game->site->site_state); ?></td></tr>
+                <tr><td>REFEREES - <?=(isset($game->ref1) ? $game->ref1 : ""); ?><?=(isset($game->ref2) ? ", ".$game->ref2 : ""); ?><?=(isset($game->ref3) ? ", ".$game->ref3 : ""); ?></td></tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+<div class="w3-row">
+    <?php if ($game->game_post): ?>
+    <p>
+        <?php foreach ($game->game_post as $post): ?>
+        <span><?=$post->post->title; ?></span>
+    <div><?=$post->post->text; ?></div>
+
+    <?php endforeach ?>
+    </p>
+    <?php endif; ?>
+    <span>
+       
+    </span>
+</div>
+
+
+<!--<div class="btn-group">
+	<?php // echo \Html::anchor('admin/game/edit/'.$game->id, 'Edit', array('class' => 'btn btn-warning')); ?>
+	<?php // echo \Html::anchor('admin/game', 'Back', array('class' => 'btn btn-default')); ?>
+</div>-->
