@@ -13,7 +13,7 @@
 //Declare counters
 $gp=0; $points=0; $conf=0;
 ?>
-<table id="table_1" class="nowrap">
+<table id="summary" class="nowrap">
     <thead class="">
         <tr>
             <th>Season</th>
@@ -47,8 +47,8 @@ $gp=0; $points=0; $conf=0;
 
 <?php if ($games): ?>
 
-<table id="table_2" class="display compact w3-small">
-    <thead class="sticky">
+<table id="games" class="display compact w3-small">
+    <thead>
         <tr>
             <th>Game date</th>
             <th>Opponent</th>
@@ -61,10 +61,8 @@ $gp=0; $points=0; $conf=0;
     </thead>
     <tbody>
         <?php  foreach ($games as $item): ?>
-        <!-- <pre>  <?php  $points += $item->pts_mur; $gp += 1;    //           print_r($item); ?> </pre> -->
+        <?php  $points += $item->pts_mur; $gp += 1;?> </pre>
         <tr>
-
-
             <td style="white-space: nowrap">
                 <?= date_format(date_create($item->game_date), 'F d, Y'); ?>
             </td>
@@ -104,7 +102,7 @@ $gp=0; $points=0; $conf=0;
 <p>
     <?php if (is_object($season_info)): ?>
     <?php if ($season_info->player_season_stats): ?>
-<table id="table_3" class="nowrap display subcomp stats_table order-column">
+<table id="stats" class="nowrap display subcomp stats_table order-column">
     <thead>
         <tr>
             <th>Name</th>
@@ -199,7 +197,7 @@ $gp=0; $points=0; $conf=0;
 
 <script>
 $(document).ready(function() {
-    $('#table_1').DataTable({
+    $('#summary').DataTable({
         "dom": 'tr',
         "searching": false,
         "order": [],
@@ -212,7 +210,7 @@ $(document).ready(function() {
     });
 });
 $(document).ready(function() {
-    $('#table_2').DataTable({
+    $('#games').DataTable({
         "dom": 'tr',
         "searching": false,
         "order": [],
@@ -225,15 +223,15 @@ $(document).ready(function() {
             },
             {
                 "className": 'dt-head-left',
-                "targets": [0, 2, 3, 4, 5, 6, 7]
+                "targets": [0, 2, 3, 4]
             },
             {
                 "className": 'dt-body-left',
-                "targets": [0, 4, 5, 7, 8]
+                "targets": [0, 1, 2]
             },
             {
                 "className": 'dt-nowrap',
-                "targets": [0, 2, 4, 5, 6, 7]
+                "targets": [0, 1, 2]
             },
             {
                 "className": 'dt-center',
@@ -243,7 +241,7 @@ $(document).ready(function() {
     });
 });
 $(document).ready(function() {
-    $('#table_3').DataTable({
+    $('#stats').DataTable({
         "dom": 'tr',
         "searching": false,
         "order": [21, 'desc'],
