@@ -15,6 +15,7 @@ $rk = 1;
 $current = date("Y");
     ?>
 
+<div class="table_container">
 <h2>Listing <span class='muted'>
         <?php if (isset($flag)): ?>
         Career Statistics
@@ -22,10 +23,7 @@ $current = date("Y");
         Individual Season Statistics
         <?php endif; ?>
     </span></h2>
-
-<br>
-<div class="table_container">
-    <table id="table_id" class="cell-border compact hover order-column nowrap stats_table w3-hide">
+    <table id="stats" class="cell-border compact hover order-column nowrap stats_table w3-hide">
         <thead>
             <tr>
                 <th></th>
@@ -121,40 +119,35 @@ $current = date("Y");
 </p>
 <script>
 $(document).ready(function() {
-    var h = $('#table_id').removeClass('w3-hide');
-    var t = $('#table_id').DataTable({
+    var h = $('#stats').removeClass('w3-hide');
+    var t = $('#stats').DataTable({
+        pageLength: 100,
         stateSave: true,
-        pageLength: 75,
         fixedHeader : {
-            headerOffset: $('#topNav').outerHeight()
+            headerOffset: 46
             },
-        stateSaveCallback: function(settings, data) {
+        stateLoadCallback: function (settings) {
+            const url = new URL(window.location.href);
+            let state = url.searchParams.get($(this).attr('id') + '_state');
+            //check the current url to see if we've got a state to restore
+            if (!state) { return null; }
+            //if we got the state, decode it and add current timestamp
+            state = JSON.parse(atob(state));
+            state['time'] = Date.now();
+            return state;
+        },
+        stateSaveCallback: function (settings, data) {
             //encode current state to base64
-            const state = btoa(JSON.stringify(data));
+            const object = {start:data.start, length:data.length, page:data.page, searchBuilder:data.searchBuilder, order:data.order};
+            const state = btoa(JSON.stringify(object));
             //get query part of the url
             let searchParams = new URLSearchParams(window.location.search);
             //add encoded state into query part
             searchParams.set($(this).attr('id') + '_state', state);
             //form url with new query parameter
-            const newRelativePathQuery = window.location.pathname + '?' + searchParams.toString() +
-                window.location.hash;
+            const newRelativePathQuery = window.location.pathname + '?' + searchParams.toString();
             //push new url into history object, this will change the current url without need of reload
             history.pushState(null, '', newRelativePathQuery);
-        },
-        stateLoadCallback: function(settings) {
-            const url = new URL(window.location.href);
-            let state = url.searchParams.get($(this).attr('id') + '_state');
-
-            //check the current url to see if we've got a state to restore
-            if (!state) {
-                return null;
-            }
-
-            //if we got the state, decode it and add current timestamp
-            state = JSON.parse(atob(state));
-            state['time'] = Date.now();
-
-            return state;
         },
         buttons: [{
                 extend: 'copyHtml5',
@@ -174,9 +167,9 @@ $(document).ready(function() {
             {
                 extend: 'searchBuilder',
                 text: 'Filter Results'
-            }
+            },
         ],
-        dom: 'Bltpr',
+        dom: 'Bl<t>pr',
         columnDefs: [{
             "orderSequence": ["desc", "asc"],
             "targets": ['_all']
@@ -194,8 +187,7 @@ $(document).ready(function() {
             cell.innerHTML = i + 1;
         });
     }).draw();
-
-
-
+    h.className += " w3-hide";
+    h.className = h.className.replace(" w3-hide", "");
 });
 </script>
