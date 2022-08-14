@@ -11,7 +11,7 @@
  */
 namespace Controller;
 
-class Base extends \Fuel\Core\Controller_Template
+class Base extends \Fuel\Core\Controller_Hybrid
 {
 	public function before()
 	{
@@ -30,6 +30,7 @@ class Base extends \Fuel\Core\Controller_Template
 
 		// Set a global variable so views can use it
 		\View::set_global('current_user', $this->current_user);
+                \Session::instance();
 	}
 
 }

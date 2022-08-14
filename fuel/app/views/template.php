@@ -4,11 +4,12 @@
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="https://racerhistory.com/favicon.ico">
-    <title><?php echo $title; ?></title>
-    <?php echo Asset::js('scroll.js'); ?>
-    <?php echo Asset::css('w3.css'); ?>
-    <?php echo Asset::css('datatables.css'); ?>
-    <?php echo Asset::js('datatables.min.js'); ?>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title><?= $title; ?></title>
+    <?= Asset::js('scroll.js'); ?>
+    <?= Asset::css('w3.css'); ?>
+    <?= Asset::css('datatables.css'); ?>
+    <?= Asset::js('datatables.min.js'); ?>
 
 </head>
 
@@ -16,7 +17,7 @@
     <nav id="topNav" class="w3-top racer-gold">
         <div class="w3-bar w3-large w3-auto">
             <a id="scroll" class="w3-bar-item w3-button w3-hide" href="/"><img class=""
-                    style="width: 100%; max-width: 540px; height: 100%; max-height: 30px" alt="Racerhistory.com"
+                    style="width: 100%; max-width: 540px; height: 100%; max-height: 29px" alt="Racerhistory.com"
                     src="/assets/img/logo.png"></img></a></li>
             <a class="w3-bar-item w3-hide-small w3-button" href="/players">PLAYERS</a></li>
             <a class="w3-bar-item w3-hide-small w3-button" href="/seasons">SEASONS</a></li>
@@ -48,7 +49,7 @@
     </header>
     <?php if (isset($sidenav)): ?>
     <nav class="w3-white">
-        <?php echo $sidenav; ?>
+        <?= $sidenav; ?>
     </nav>
     <?php endif; ?>
     <div class="racer-grey w3-row w3-container">
@@ -64,28 +65,28 @@
                     </script>
                 </div>
             </div>
-            <div class="w3-right w3-row-padding w3-col l10 m12 s12">
-                <?php if (Session::get_flash('success')): ?>
+            <div class="w3-left w3-row-padding w3-col l10 m12 s12">
+                <?php if (\Session::get_flash('success')): ?>
                 <div class="alert alert-success">
                     <strong>Success</strong>
                     <p>
-                        <?php echo implode('</p><p>', e((array) Session::get_flash('success'))); ?>
+                        <?= implode('</p><p>', e((array) \Session::get_flash('success'))); ?>
                     </p>
                 </div>
                 <?php endif; ?>
-                <?php if (Session::get_flash('error')): ?>
+                <?php if (\Session::get_flash('error')): ?>
                 <div class="alert alert-danger">
                     <strong>Error</strong>
                     <p>
-                        <?php echo implode('</p><p>', e((array) Session::get_flash('error'))); ?>
+                        <?= implode('</p><p>', e((array) \Session::get_flash('error'))); ?>
                     </p>
                 </div>
                 <?php endif; ?>
                 <div class="w3-row w3-white">
-                    <?php echo $content; ?>
-                    <?php if (isset($content2)): echo $content2; endif; ?>
-                    <?php if (isset($content3)): echo $content3; endif; ?>
-                    <?php if (isset($content4)): echo $content4; endif; ?>
+                    <?= $content; ?>
+                    <?= (isset($content2) ? $content2 : ""); ?>
+                    <?= (isset($content3) ? $content3 : ""); ?>
+                    <?= (isset($content4) ? $content4 : ""); ?>
                 </div>
             </div>
         </div>

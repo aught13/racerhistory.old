@@ -6,16 +6,14 @@ class Games extends \Controller\Base
 
     public function action_index()
     {
-        $query = \Model\Game::query()->related(['game_type', 'opponent', 'site'])->order_by('game_date', 'desc');
-
-        $data['games'] = $query->get();
-
         $this->template->title   = "Games";
-        $this->template->content = \View::forge('games/index', $data);
+        $this->template->content = \View::forge('games/index');
+        \Session::set('nav', NULL);
     }
 
     public function action_view($id = null)
     {
+        is_null($id) and \Response::redirect('games');
         $data['game'] = \Model\Game::find($id, [
             'related' => [
                 'game_type',
@@ -31,7 +29,6 @@ class Games extends \Controller\Base
                     ]
                 ]
             ]);
-
         $this->template->title   = "Game";
         $this->template->content = \View::forge('games/view', $data, false);
 
