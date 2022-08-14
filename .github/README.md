@@ -13,8 +13,8 @@ Racerhistory.com is being developed as an online repository for Murray State Uni
 
 ## Roadmap
 
-- Complete conversion of origonal site to fuelPHP -- In Progress
-- Complete backend for new site -- In Progress
+- Complete conversion of origonal site to fuelPHP -- complete with ver 1.0
+- Complete backend for new site -- In development
 - Split out indivual sport sections from common parts and create modules
 - Add additional sports
 
