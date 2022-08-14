@@ -41,7 +41,7 @@
     </p>
     <?php endif; ?>
     <span>
-       
+        <?= ((\Session::get('nav')) ? \Html::anchor('seasons/view/'.\Session::get('nav'), "Back" , []) : \Html::anchor('games', "Back", [])); ?>
     </span>
 </div>
 

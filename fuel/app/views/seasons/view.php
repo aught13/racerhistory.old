@@ -12,12 +12,7 @@
  */
 //Declare counters
 $gp=0; $points=0; $conf=0;
-
 ?>
-<br>
-
-
-
 <table id="table_1" class="nowrap">
     <thead class="">
         <tr>
@@ -71,7 +66,7 @@ $gp=0; $points=0; $conf=0;
 
 
             <td style="white-space: nowrap">
-                <?php echo date_format(date_create($item->game_date), 'F d, Y'); ?>
+                <?= date_format(date_create($item->game_date), 'F d, Y'); ?>
             </td>
             <td style="white-space: nowrap">
                 <?= (isset($item->mur_rank) ? '#'.$item->mur_rank.' ' : '');?>Murray St
@@ -95,7 +90,7 @@ $gp=0; $points=0; $conf=0;
                 <?= (isset($item->notes) ? $item->notes : ""); ?>
             </td>
             <td>
-                <?= \Html::anchor('games/view/'.$item->id, '<i class="icon-eye-open"></i> View', array('class' => 'btn btn-default btn-sm')); ?>
+                <?= \Html::anchor('games/view/'.$item->id, '<i class="fa fa-eye"></i>', array('class' => 'w3-small')); ?>
             </td>
         </tr>
         <?php endforeach; ?>

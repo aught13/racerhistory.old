@@ -32,7 +32,7 @@ class Seasons extends \Controller\Base
      * @param int $id Season Id to be searched by
      */
     public function action_view($id = null)	{
-        is_null($id) and Response::redirect('seasons');
+        is_null($id) and \Response::redirect('seasons');
 
         if ( ! $data = \Model\Season::get_season_info($id)) 
         {
@@ -47,6 +47,7 @@ class Seasons extends \Controller\Base
             \Session::set_flash('error', 'Could not find games');
             \Response::redirect('seasons');
         }
+        \Session::set('nav', $id);
         $nav['from'] = intval(\Model\Season::get_from());
         $nav['till'] = intval(\Model\Season::get_till());
         $nav['season'] = intval($id);

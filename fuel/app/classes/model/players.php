@@ -49,6 +49,7 @@ class Players extends \Model
     }
     
     public static function view_player($param) {
+        is_null($param) and Response::redirect('players');
         $data = \Model\Person::find($param, [
             'related' => [
                 'person_post' => [
