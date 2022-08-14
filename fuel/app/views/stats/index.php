@@ -11,18 +11,11 @@
  */
 
 if ($player_season_stats): 
-$rk = 1;
 $current = date("Y");
-    ?>
+?>
 
 <div class="table_container">
-<h2>Listing <span class='muted'>
-        <?php if (isset($flag)): ?>
-        Career Statistics
-        <?php else: ?>
-        Individual Season Statistics
-        <?php endif; ?>
-    </span></h2>
+<h2>Listing <?= (isset($flag) ? 'Career Statistics' : 'Individual Season Statistics'); ?></h2>
     <table id="stats" class="cell-border compact hover order-column nowrap stats_table w3-hide">
         <thead>
             <tr>
@@ -61,14 +54,8 @@ $current = date("Y");
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($player_season_stats as $item): 
-        $pergame = 1; $FGP = 1; $ATO = 1;   
-        if (isset($flag)): 
-            if ($item->start < 1944): $pergame = 0; endif;
-            if ($item->start < 1949): $FGP = 0; endif;
-            if ($item->start < 1979): $ATO = 0; endif;
-            if ($item->finish !== $current XOR ($current + 1)): echo '<tr style = "font-weight: bold;">'; else: echo '<tr>'; endif; 
-            elseif ($item->season_id !== $current XOR ($current + 1)): echo '<tr style = "font-weight: bold;">'; else: echo '<tr>'; endif;?>
+            <?php foreach ($player_season_stats as $item): ?>
+            <?= (isset($flag) ? (($item->finish !== $current XOR ($current + 1)) ? '<tr style = "font-weight: bold;">' : '<tr>') : (($item->season_id !== $current XOR ($current + 1)) ? '<tr style = "font-weight: bold;">' : '<tr>'));?>
             <td></td>
             <td><?= Html::anchor('players/view/'.$item->person->id, $item->person->first. ' ' .$item->person->last) ?>
             </td>
@@ -84,28 +71,24 @@ $current = date("Y");
             <td><?= $item->MIN; ?></td>
             <td><?= $item->FGM; ?></td>
             <td><?= $item->FGA; ?></td>
-            <td><?php if ($FGP == 1 && is_float($item->FGP)): echo number_format($item->FGP,3,'.',''); endif; ?></td>
+            <td><?= (isset($item->FGP) ? number_format($item->FGP,3,'.','') : ''); ?></td>
             <td><?= $item->TPM; ?></td>
             <td><?= $item->TPA; ?></td>
-            <td><?php if ($item->TPM>0): echo number_format($item->TPP,3,'.',''); endif; ?></td>
+            <td><?= ($item->TPM>0 ? number_format($item->TPP,3,'.','') : ''); ?></td>
             <td><?= $item->FTM; ?></td>
             <td><?= $item->FTA; ?></td>
-            <td><?php if ($item->FTM>0): echo number_format($item->FTP,3,'.',''); endif; ?></td>
+            <td><?= ($item->FTM>0 ? number_format($item->FTP,3,'.','') : ''); ?></td>
             <td><?= $item->ORB; ?></td>
             <td><?= $item->DRB; ?></td>
             <td><?= $item->RB; ?></td>
             <td><?= $item->PF; ?></td>
             <td><?= $item->AST; ?></td>
             <td><?= $item->TRN; ?></td>
-            <td><?php if ($ATO == 1 && is_float($item->ATR)): echo number_format($item->ATR,2,'.','');  endif; ?></td>
+            <td><?= (isset($item->ATR) ? number_format($item->ATR,2,'.','') : ''); ?></td>
             <td><?= $item->BLK; ?></td>
             <td><?= $item->STL; ?></td>
             <td><?= $item->PTS; ?></td>
-            <?php if ($item->GP>0 && $pergame == 1): ?>
-            <td><?= number_format(($item->PTS/$item->GP),1,'.',''); ?></td>
-            <?php else: ?>
-            <td></td>
-            <?php endif; ?>
+            <td><?= ($item->GP>0 ? number_format(($item->PTS/$item->GP),1,'.','') : ''); ?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>
