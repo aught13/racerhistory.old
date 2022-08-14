@@ -33,5 +33,3 @@ desktop.ini
 /fuel/app/config/crypt.php
 /nbproject/private/
 /nbproject
-/fuel/app/views/admin/
-/fuel/app/classes/controller/admin/
