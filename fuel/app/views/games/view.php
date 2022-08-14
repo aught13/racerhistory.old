@@ -35,7 +35,7 @@
     <p>
         <?php foreach ($game->game_post as $post): ?>
         <span><?=$post->post->title; ?></span>
-    <div><?=$post->post->text; ?></div>
+    <div class="w3-row" style="overflow: scroll"><?=$post->post->text; ?></div>
 
     <?php endforeach ?>
     </p>
