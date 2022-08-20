@@ -7,16 +7,18 @@
 
         <title><?php echo $title; ?></title>
 
-        <?php 
-            echo Asset::css('bootstrap.css'); 
-            
-            if ($title == ('New Post' || 'Edit Post' || 'View Post' || 'All Posts')) { 
-                echo Asset::js(['https://cdn.tiny.cloud/1/6x4xhucgxq3bhx4mezzzt3t3x1znsfxw9m5wtkdwbt7vk1oc/tinymce/6/tinymce.min.js',],['referrerpolicy' => 'origin']);
-            }
+        <?php
+        echo Asset::css('bootstrap.css');
+
+        if ($title == ('New Post' || 'Edit Post' || 'View Post' || 'All Posts')) {
+            echo Asset::js(['https://cdn.tiny.cloud/1/6x4xhucgxq3bhx4mezzzt3t3x1znsfxw9m5wtkdwbt7vk1oc/tinymce/6/tinymce.min.js',], ['referrerpolicy' => 'origin']);
+        }
         ?>
 
         <style>
-                body { margin-top: 50px; }
+            body {
+                margin-top: 50px;
+            }
         </style>
     </head>
 
@@ -40,16 +42,15 @@
                             </li>
 
                             <?php
-                                foreach (new GlobIterator(APPPATH.'classes/controller/admin/*.php') as $file)
-                                {
-                                    $section_segment = $file->getBasename('.php');
-                                    $section_title = Inflector::humanize($section_segment);
-                            ?>
-                                    <li class="<?php echo Uri::segment(2) == $section_segment ? 'active' : '' ?>">
-                                        <?php echo Html::anchor('admin/'.$section_segment, $section_title) ?>
-                                    </li>
-                            <?php
-                                }
+                            foreach (new GlobIterator(APPPATH . 'classes/controller/admin/*.php') as $file) {
+                                $section_segment = $file->getBasename('.php');
+                                $section_title = Inflector::humanize($section_segment);
+                                ?>
+                                <li class="<?php echo Uri::segment(2) == $section_segment ? 'active' : '' ?>">
+                                    <?php echo Html::anchor('admin/' . $section_segment, $section_title) ?>
+                                </li>
+                                <?php
+                            }
                             ?>
                         </ul>
 
@@ -76,36 +77,37 @@
                         <div class="alert alert-success alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <p>
-                            <?php echo implode('</p><p>', (array) Session::get_flash('success')); ?>
+                                <?php echo implode('</p><p>', (array) Session::get_flash('success')); ?>
                             </p>
                         </div>
                     <?php endif; ?>
 
                     <?php if (Session::get_flash('error')): ?>
-                    <div class="alert alert-danger alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <p>
-                        <?php echo implode('</p><p>', (array) Session::get_flash('error')); ?>
-                        </p>
-                    </div>
+                        <div class="alert alert-danger alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <p>
+                                <?php echo implode('</p><p>', (array) Session::get_flash('error')); ?>
+                            </p>
+                        </div>
                     <?php endif; ?>
                 </div>
 
                 <div class="col-md-12">
-                    <?php echo $content; 
-                    if (($title == 'New Post') || ($title == 'Edit Post')): 
+                    <?php
+                    echo $content;
+                    if (($title == 'New Post') || ($title == 'Edit Post')):
                         ?>
                         <script>
                             tinymce.init({
-                              selector: 'textarea',
-                              plugins: ' image autolink lists media table ',
-                              toolbar: 'checklist code image editimage table',
-                              toolbar_mode: 'floating',
-                              tinycomments_mode: 'embedded',
-                              tinycomments_author: 'Author name',
+                                selector: 'textarea',
+                                plugins: ' advlist autolink lists link image charmap preview anchor pagebreak media table ',
+                                toolbar: 'link image media table charmap fontfamily fontsize forecolor backcolor bold italic underline strikethrough subscript superscript alignleft aligncenter alignright alignjustify blockquote hr',
+                                toolbar_mode: 'floating',
+                                tinycomments_mode: 'embedded',
+                                tinycomments_author: 'Author name',
                             });
                         </script>
-                    <?php endif;?>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -120,10 +122,11 @@
         </div>
 
 
-        <?php 
-            echo Asset::js([
+        <?php
+        echo Asset::js([
             'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js',
-            'bootstrap.js',   
-            ]); ?>
+            'bootstrap.js',
+        ]);
+        ?>
     </body>
 </html>

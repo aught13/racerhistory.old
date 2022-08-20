@@ -15,14 +15,23 @@
 
 <body>
     <nav id="topNav" class="w3-top racer-gold">
-        <div class="w3-bar w3-large w3-auto">
+        <div class="w3-auto w3-bar w3-large">
             <a id="scroll" class="w3-bar-item w3-button w3-hide" href="/"><img class=""
                     style="width: 100%; max-width: 540px; height: 100%; max-height: 29px" alt="Racerhistory.com"
                     src="/assets/img/logo.png"></img></a></li>
-            <a class="w3-bar-item w3-hide-small w3-button" href="/players">PLAYERS</a></li>
-            <a class="w3-bar-item w3-hide-small w3-button" href="/seasons">SEASONS</a></li>
-            <a class="w3-bar-item w3-hide-small w3-button" href="/stats">STATS</a></li>
+            <a class="w3-bar-item w3-hide-small w3-button" href="/players">PLAYERS</a>
+            <a class="w3-bar-item w3-hide-small w3-button" href="/seasons">SEASONS</a>
+            <a class="w3-bar-item w3-hide-small w3-button" href="/stats">STATS</a>
             <a class="w3-bar-item w3-hide-small w3-button" href="/games">GAMES</a>
+            <?php if ($current_user) : ?>
+            <div class="w3-dropdown-hover">
+                <button  class="w3-button" href="#"><?=Inflector::words_to_upper($current_user->username);?></button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4 racer-gold">
+                    <?= Html::anchor('admin/', 'Dashboard', ['class' => 'w3-bar-item w3-button']); ?>
+                    <?= Html::anchor('admin/logout', 'Logout', ['class' => 'w3-bar-item w3-button']); ?>
+                </div>
+            </div>
+            <?php endif; ?>
             <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
                 onclick="dropNav()">&#9776;</a>
         </div>

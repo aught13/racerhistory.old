@@ -42,7 +42,7 @@ class Game extends \Controller\Admin
             $new      = $this->createNew($fieldset->validation()->input(), $form);
             
             
-            $seasons  = \Model\Season\Info::menuSeasons();
+            $seasons  = \Model\Team\Season::menuSeasons();
             $types    = \Model\Game\Type::menuTypes();
             $opponent = \Model\Opponent::menuOpponent();
             $sites    = \Model\Site::menuSites();
@@ -127,7 +127,7 @@ class Game extends \Controller\Admin
             }
             $form     = $fieldset->form();
             $new      = $this->createNew($fieldset->validation()->input(), $form);
-            $seasons  = \Model\Season\Info::menuSeasons();
+            $seasons  = \Model\Team\Season::menuSeasons();
             $types    = \Model\Game\Type::menuTypes();
             $opponent = \Model\Opponent::menuOpponent();
             $sites    = \Model\Site::menuSites();
