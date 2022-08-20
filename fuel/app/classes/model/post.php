@@ -1,8 +1,9 @@
 <?php
+
 namespace Model;
 
-class Post extends \Orm\Model
-{
+class Post extends \Orm\Model {
+
     protected static $_properties = [
         "id",
         "title" => [
@@ -19,7 +20,7 @@ class Post extends \Orm\Model
         ],
         "text" => [
             "label" => "Text",
-            "data_type" => "longtext",            
+            "data_type" => "longtext",
             "validation" => [
                 "required",
                 "match_pattern" => ["/^[^\{\}]+$/"]
@@ -36,24 +37,17 @@ class Post extends \Orm\Model
             'label' => 'Updated',
             'form' => ['type' => false]
         ],
-    ];    
-
+    ];
     protected static $_observers = [
-        'Orm\Observer_CreatedAt' => ['events' => ['before_insert'],'mysql_timestamp' => true],
-        'Orm\Observer_UpdatedAt' => ['events' => ['before_save'],'mysql_timestamp' => true],
+        'Orm\Observer_CreatedAt' => ['events' => ['before_insert'], 'mysql_timestamp' => true],
+        'Orm\Observer_UpdatedAt' => ['events' => ['before_save'], 'mysql_timestamp' => true],
         'Orm\Observer_Validation' => ['events' => ['before_insert', 'before_save']]
     ];
-
     protected static $_table_name = 'posts';
-
     protected static $_primary_key = ['id'];
-
     protected static $_has_many = [];
-
     protected static $_many_many = [];
-
     protected static $_has_one = [];
-
     protected static $_belongs_to = [
         'person_post' => [
             'key_from' => 'post_id',
@@ -61,14 +55,14 @@ class Post extends \Orm\Model
             'key_to' => 'id',
             'cascade_save' => true,
             'cascade_delete' => true,
-       ],
+        ],
         'game_post' => [
             'key_from' => 'id',
             'model_to' => '\Model\Game\Post',
             'key_to' => 'post_id',
             'cascade_save' => true,
             'cascade_delete' => true,
-       ],
+        ],
         'season_post' => [
             'key_from' => 'id',
             'model_to' => '\Model\Season\Post',
@@ -77,6 +71,5 @@ class Post extends \Orm\Model
             'cascade_delete' => true,
         ]
     ];
-    
 
 }
