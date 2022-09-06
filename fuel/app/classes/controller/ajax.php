@@ -18,9 +18,11 @@ class ajax extends \Controller\Base
     public function post_games()
     {
         $data = \Model\Game::query()->related(['game_type', 'opponent', 'site'])->order_by('game_date', 'ASC')->get();
-        
+        $i=1;        
         foreach ($data as $item) {
+            
             $response[] = [
+                'num'       => $i,
                 'season'    => $item->season,
                 'date'      => date_format(date_create($item->game_date), 'Y-m-d'),
                 'mur_rk'    => (isset($item->mur_rank) ? $item->mur_rank : ''),
@@ -35,9 +37,10 @@ class ajax extends \Controller\Base
                 'ot'        => (isset($item->overtime) ? ($item->overtime > 1 ? " ".$item->overtime."OT" : " OT") : "" ),
                 'type'      => $item->game_type->game_type_name,
                 'link'      => \Html::anchor('games/view/'.$item->id, '<i class="icon-eye-open"></i> View', array('class' => 'btn btn-default btn-sm'))
-            ];            
+            ];
+        $i++;
         }
         
-        return $response;
+        return $this->response($response);
     }
 }

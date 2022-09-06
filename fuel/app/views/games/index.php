@@ -38,7 +38,7 @@ $(document).ready(function() {
             dataSrc: ''
         },
         columns: [
-            {},
+            {data: 'num'},
             {data: 'season'},
             {data: 'date'},
             {data: 'mur_rk'},
@@ -112,9 +112,10 @@ $(document).ready(function() {
             {   
                 searchable: false,
                 orderable: false,
-                targets: 0
+                targets: 0,
             }
         ],
+        order: [[ 2, 'desc' ]],
         select: {
             style: 'multi'
         },
