@@ -38,8 +38,8 @@ return array(
 	'form_method'          => 'post',
 	'form_template'        => "\n{open}\n{fields}\n{close}\n",
 	'fieldset_template'    => "\n\t\t{open}\n{fields}\n\t\t{close}\n",
-	'field_template'       => "<div class=\"form-group, {error_class}\">\n\t{label} \n\t{required} {field} \n\t<span>{description}</span> {error_msg}\n</div>",
-	'multi_field_template' => "<div class=\"form-group, {error_class}\">{group_label}{required}\n\t<div class=\"{error_class}\">{fields}\n\t\t{field} {label}<br />\n{fields}<span>{description}</span>\t\t\t{error_msg}\n\t\t</div>\n\t</div>\n",
+	'field_template'       => "{field}",
+	'multi_field_template' => "{fields} {field} {label} {fields}",
 	'error_template'       => '<span>{error_msg}</span>',
 	'group_label'          => '<span>{label}</span>',
 	'required_mark'        => '*',
@@ -47,18 +47,5 @@ return array(
 	'error_class'          => null,
 	'label_class'          => null,
 
-	/**
-	 * -------------------------------------------------------------------------
-	 *  Tabular
-	 * -------------------------------------------------------------------------
-	 *
-	 *  Tabular form definitions.
-	 *
-	 */
-
-	'tabular_form_template'      => "<table class=\"table-condensed\">{fields}</table>\n",
-	'tabular_field_template'     => "{field}",
-	'tabular_row_template'       => "<tr>{fields}</tr>\n",
-	'tabular_row_field_template' => "\t\t\t<td>{label}{required}&nbsp;{field} {error_msg}</td>\n",
-	'tabular_delete_label'       => "Delete?",
+	
 );

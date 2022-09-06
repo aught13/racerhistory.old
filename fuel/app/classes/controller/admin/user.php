@@ -1,12 +1,14 @@
 <?php
-class Controller_Admin_User extends Controller_Admin
+namespace Controller\Admin;
+
+class User extends \Controller\Admin
 {
 
 	public function action_index()
 	{
-		$query = Model\Auth_User::query()->related(['metadata' , 'group']);
+		$query = \Model\Auth_User::query()->related(['metadata' , 'group']);
 
-		$pagination = Pagination::forge('users_pagination', [
+		$pagination = \Pagination::forge('users_pagination', [
 			'total_items' => $query->count(),
 			'uri_segment' => 'page',
 		]);
@@ -18,67 +20,133 @@ class Controller_Admin_User extends Controller_Admin
 		$this->template->set_global('pagination', $pagination, false);
 
 		$this->template->title   = "All Users";
-		$this->template->content = View::forge('admin/user/index', $data);
+		$this->template->content = \View::forge('admin/user/index', $data);
 	}
 
 	public function action_view($id = null)
 	{
-		$data['user'] = Model\Auth_User::find($id , ['realated' => ['group' , 'metadata']]);
+		$data['user'] = \Model\Auth_User::find($id , ['realated' => ['group' , 'metadata']]);
 
 		$this->template->title = "User";
-		$this->template->content = View::forge('admin/user/view', $data);
+		$this->template->content = \View::forge('admin/user/view', $data);
 
 	}
 
-	public function action_create()
-	{
-		if (Input::method() == 'POST')
-		{
-			$val = Model_User::validate('create');
+        public function action_register()
+        {
+            // is registration enabled?
+            if ( ! \Config::get('application.user.registration', false))
+            {
+                // inform the user registration is not possible
+                \Session::set_flash('error', 'login.registation-not-enabled');
 
-			if ($val->run())
-			{
-				$user = Model_User::forge([
-					'id' => Input::post('id'),
-					'username' => Input::post('username'),
-					'password' => Input::post('password'),
-					'group_id' => Input::post('group_id'),
-					'email' => Input::post('email'),
-					'last_login' => Input::post('last_login'),
-					'previous_login' => Input::post('previous_login'),
-					'login_hash' => Input::post('login_hash'),
-					'user_id' => Input::post('user_id'),
-				]);
+                // and go back to the previous page (or the homepage)
+                \Response::redirect_back();
+            }
 
-				if ($user and $user->save())
-				{
-					Session::set_flash('success', e('Added user #'.$user->id.'.'));
+            // create the registration fieldset
+            $form = \Fieldset::forge('registerform');
 
-					Response::redirect('admin/user');
-				}
+            // add a csrf token to prevent CSRF attacks
+            $form->form()->add_csrf();
 
-				else
-				{
-					Session::set_flash('error', e('Could not save user.'));
-				}
-			}
-			else
-			{
-				Session::set_flash('error', $val->error());
-			}
-		}
+            // and populate the form with the model properties
+            $form->add_model('Model\\Auth_User');
 
-		$this->template->title = "Add a user";
-		$this->template->content = View::forge('admin/user/create');
+            // add the fullname field, it's a profile property, not a user property
+            $form->add_after('fullname', 'Full Name', array(), array(), 'username')->add_rule('required');
 
-	}
+            // add a password confirmation field
+            $form->add_after('confirm', 'Confirm Password', array('type' => 'password'), array(), 'password')->add_rule('required');
+
+            // make sure the password is required
+            $form->field('password')->add_rule('required');
+
+            // and new users are not allowed to select the group they're in (duh!)
+            $form->disable('group_id');
+
+            // since it's not on the form, make sure validation doesn't trip on its absence
+            $form->field('group_id')->delete_rule('required')->delete_rule('is_numeric');
+            
+            $form->add('submit', '', ['type' => 'submit', 'value' => 'Create', 'class' => 'btn medium primary']);
+
+            // was the registration form posted?
+            if (\Input::method() == 'POST')
+            {
+                // validate the input
+                $form->validation()->run();
+
+                // if validated, create the user
+                if ( ! $form->validation()->error())
+                {
+                    try
+                    {
+                        // call Auth to create this user
+                        $created = \Auth::create_user(
+                            $form->validated('username'),
+                            $form->validated('password'),
+                            $form->validated('email'),
+                            \Config::get('application.user.default_group', 1),
+                            array(
+                                'fullname' => $form->validated('fullname'),
+                            )
+                        );
+
+                        // if a user was created succesfully
+                        if ($created)
+                        {
+                            // inform the user
+                            \Session::set_flash('success', e('Account Created'));
+
+                            // and go back to the previous page, or show the
+                            // application dashboard if we don't have any
+                            \Response::redirect_back('auth/user');
+                        }
+                        else
+                        {
+                            // oops, creating a new user failed?
+                            \Session::set_flash('error', 'Didn\'t work');
+                        }
+                    }
+
+                    // catch exceptions from the create_user() call
+                    catch (\SimpleUserUpdateException $e)
+                    {
+                        // duplicate email address
+                        if ($e->getCode() == 2)
+                        {
+                            \Session::set_flash('error', e('Email already exists'));
+                        }
+
+                        // duplicate username
+                        elseif ($e->getCode() == 3)
+                        {
+                            \Session::set_flash('error', e('Username already exists'));
+                        }
+
+                        // this can't happen, but you'll never know...
+                        else
+                        {
+                            \Session::set_flash('error', $e->getMessage());
+                        }
+                    }
+                }
+
+                // validation failed, repopulate the form from the posted data
+                $form->repopulate();
+            }
+
+            // pass the fieldset to the form, and display the new user registration view
+            $this->template->title = 'Create User';
+            $this->template->set('content', $form->build(), false);
+        }
 
 	public function action_edit($id = null)
 	{
-		$user = Model\Auth_User::find($id, ['related' => ['metadata']]);
+		$user = \Model\Auth_User::find($id, ['related' => ['metadata']]);
                 
                             // create the registration fieldset
-            $form = \Fieldset::forge('registerform');
+            $form = \Fieldset::forge('editform');
 
             // add a csrf token to prevent CSRF attacks
             $form->form()->add_csrf();
@@ -167,7 +235,7 @@ class Controller_Admin_User extends Controller_Admin
 
                 // validation failed, repopulate the form from the posted data
                 $form->repopulate();
-                Session::set_flash('error', e($form->validation()->error()));
+                \Session::set_flash('error', e($form->validation()->error()));
             }
 
             // pass the fieldset to the form, and display the new user registration view
@@ -190,14 +258,14 @@ class Controller_Admin_User extends Controller_Admin
 			Session::set_flash('error', e('Could not delete user #'.$id));
 		}
 
-		Response::redirect('admin/user');
+		\Response::redirect('admin/user');
 
 	}
         
         
 	public function action_password($id = null)
 	{
-            $user = Model\Auth_User::find($id);
+            $user = \Model\Auth_User::find($id);
                 
             // create the registration fieldset
             $form = \Fieldset::forge('passwordform');
@@ -266,7 +334,7 @@ class Controller_Admin_User extends Controller_Admin
 
                 // validation failed, repopulate the form from the posted data
                 $form->repopulate();
-                Session::set_flash('error', $form->show_errors());
+                \Session::set_flash('error', $form->show_errors());
             }
 
             // pass the fieldset to the form, and display the new user registration view

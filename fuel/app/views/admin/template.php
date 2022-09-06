@@ -9,8 +9,9 @@
 
         <?php
         echo Asset::css('bootstrap.css');
+        echo Asset::css('w3.css');
 
-        if ($title == ('New Post' || 'Edit Post' || 'View Post' || 'All Posts')) {
+        if ($title == ('New Post' || 'Edit Post')) {
             echo Asset::js(['https://cdn.tiny.cloud/1/6x4xhucgxq3bhx4mezzzt3t3x1znsfxw9m5wtkdwbt7vk1oc/tinymce/6/tinymce.min.js',], ['referrerpolicy' => 'origin']);
         }
         ?>
@@ -32,7 +33,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#">My Site</a>
+                        <a class="navbar-brand" href="#">Racerhistory</a>
                     </div>
 
                     <div class="navbar-collapse collapse">
@@ -47,7 +48,20 @@
                                 $section_title = Inflector::humanize($section_segment);
                                 ?>
                                 <li class="<?php echo Uri::segment(2) == $section_segment ? 'active' : '' ?>">
-                                    <?php echo Html::anchor('admin/' . $section_segment, $section_title) ?>
+                                    <div class="w3-dropdown-hover">
+                                        <button  class="w3-button" href="#"><?php echo Html::anchor('admin/' . $section_segment, $section_title) ?></button>
+                                        <div class="w3-dropdown-content w3-bar-block">
+                                            <?php
+                                            foreach (new GlobIterator(APPPATH . 'classes/controller/admin/' . $section_segment . '/*.php') as $file2) {
+                                                $section_segment2 = $file2->getBasename('.php');
+                                                $section_title2 = Inflector::humanize($section_segment2);
+                                                ?>
+                                                <?php echo Html::anchor('admin/' .$section_segment.'/'. $section_segment2, $section_title2, ['class' => 'w3-bar-item w3-button']) ?>
+                                                <?php
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
                                 </li>
                                 <?php
                             }

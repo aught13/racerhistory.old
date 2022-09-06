@@ -40,7 +40,7 @@
             <td>
                 <div class="btn-toolbar">
                     <div class="btn-group">
-                        <?php echo Html::anchor('seasons/view/'.$item->season, '<i class="icon-eye-open"></i> View', array('class' => 'btn btn-default btn-sm')); ?>
+                        <?php echo Html::anchor((($current_user) ? 'admin/' : '').'seasons/view/'.$item->season, '<i class="icon-eye-open"></i> View', array('class' => 'btn btn-default btn-sm')); ?>
                     </div>
 
             </td>

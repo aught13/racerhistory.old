@@ -6,98 +6,24 @@ class Game extends \Orm\Model
 {
     protected static $_properties = [
         'id',
-        'season' => [
-            'data_type' => 'number',
-            'label' => 'Season',
-            'form' => ['type' => 'select', 'class' => 'form-control'],
-            'validation' => ['required', 'numeric_between' => [1000, 9999]],
-        ],
-        'game_date' => [
-            'data_type' => 'datetime',
-            'label' => 'Date & Time',
-            'form' => ['type' => 'datetime-local', 'class' => 'form-control'],
-            'validation' => ['required'],
-        ],
-        'game_type_id' => [
-            'data_type' => 'number',
-            'label' => 'Game Type',
-            'form' => ['type' => 'select', 'class' => 'form-control'],
-            'validation' => ['valid_string' => ['numeric']],
-        ],
-        'opponent_id' => [
-            'data_type' => 'number',
-            'label' => 'Opponent',
-            'form' => ['type' => 'select', 'class' => 'form-control'],
-            'validation' => ['required', 'valid_string' => ['numeric']],
-        ],
-        'site_id' => [
-            'data_type' => 'number',
-            'label' => 'Site',
-            'form' => ['type' => 'select', 'class' => 'form-control'],
-            'validation' => ['required', 'valid_string' => ['numeric']],
-        ],
-        'hrn' => [
-            'data_type' => 'number',
-            'label' => 'Home, Road, or Neutral Site',
-            'form' => [
-                'type' => 'select',
-                'options' => [
-                    1 => 'Home',
-                    2 => 'Road',
-                    3 => 'Neutral',
-                ],
-                'class' => 'form-control',
-            ],
-            'validation' => ['required', 'valid_string' => ['numeric']],
-        ],
-        'post' => [
-            'data_type' => 'number',
-            'label' => 'Postseason Game?',
-            'form' => [
-                'type' => 'radio',
-                'options' => [
-                    1 => 'Yes',
-                    0 => 'No',
-                ],
-            ],
-            'validation' => ['required'],
-        ],
-        'w' => [
-            'data_type' => 'number',
-            'validation' => ['required', 'numeric_between' => [0, 1]],
-        ],
-        'l' => [
-            'data_type' => 'number',
-            'validation' => ['required', 'numeric_between' => [0, 1]],
-        ],
-        'pts_mur' => [
-            'data_type' => 'number',
-            'label' => 'Final Murray',
-            'form' => ['type' => 'number'],
-            'validation' => ['required', 'valid_string' => ['numeric']],
-        ],
-        'pts_opp' => [
-            'data_type' => 'number',
-            'label' => 'Final Opponent',
-            'form' => ['type' => 'number'],
-            'validation' => ['required', 'valid_string' => ['numeric']],
-        ],
-        'created_at' => [
-            'data_type' => 'timestamp',
-            'label' => 'Created',
-            'form' => ['type' => false],
-        ],
-        'updated_at' => [
-            'data_type' => 'timestamp',
-            'label' => 'Updated',
-            'form' => ['type' => false],
-        ],
+        'season',
+        'game_date',
+        'game_type_id',
+        'opponent_id',
+        'site_id',
+        'hrn',
+        'post',
+        'w',
+        'l',
+        'pts_mur',
+        'pts_opp',
+        'created_at',
+        'updated_at',
     ];
 
     protected static $_observers = [
         'Orm\Observer_CreatedAt' => ['events' => ['before_insert'], 'mysql_timestamp' => true],
-        'Orm\Observer_UpdatedAt' => ['events' => ['before_save'], 'mysql_timestamp' => true],
-        'Orm\Observer_Validation' => ['events' => ['before_insert', 'before_save']],
+        'Orm\Observer_UpdatedAt' => ['events' => ['before_update'], 'mysql_timestamp' => true],
     ];
 
     protected static $_table_name = 'games';
@@ -110,7 +36,7 @@ class Game extends \Orm\Model
             'model_to' => '\Model\Game\Meta',
             'key_to' => 'game_id',
             'cascade_save' => true,
-            'cascade_delete' => false,
+            'cascade_delete' => true,
         ],
         'game_post' => [
             'key_from' => 'id',

@@ -44,5 +44,5 @@
 <?php endif; ?>
 
 <p>
-	<?php echo Html::anchor('admin/user/create', 'Add new User', array('class' => 'btn btn-success')); ?>
+	<?php echo Html::anchor('admin/user/register', 'Add new User', array('class' => 'btn btn-success')); ?>
 </p>

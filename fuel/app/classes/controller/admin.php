@@ -15,8 +15,6 @@ namespace Controller;
 
 class Admin extends \Controller\Base {
 
-    public $template = 'admin/template';
-
     public function before() {
         parent::before();
 
@@ -187,6 +185,41 @@ class Admin extends \Controller\Base {
         // pass the fieldset to the form, and display the new user registration view
         $this->template->title = 'Register';
         $this->template->set('content', $form->build(), false);
+    }
+
+    public static function set_fields($properties, $fieldset) {
+        
+        foreach ($properties as $p => $settings) {
+            if (\Arr::get($settings, 'skip')) {
+                continue;
+            }
+
+            if (isset($settings['form']['options'])) {
+                foreach ($settings['form']['options'] as $key => $value) {
+                    is_array($value) or $settings['form']['options'][$key] = \Lang::get($value, [], false) ?: $value;
+                }
+            }
+
+            // field attributes can be passed in form key
+            $attributes = isset($settings['form']) ? $settings['form'] : [];
+            // label is either set in property setting, as part of form attributes or defaults to fieldname
+            $label = isset($settings['label']) ? $settings['label'] : (isset($attributes['label']) ? $attributes['label'] : $p);
+            $label = \Lang::get($label, [], false) ?: $label;
+            // create the field and add validation rules
+            $field = $fieldset->add($p, $label, $attributes);
+            if (!empty($settings['validation'])) {
+                foreach ($settings['validation'] as $rule => $args) {
+                    if (is_int($rule) and is_string($args)) {
+                        $args = [$args];
+                    } else {
+                        array_unshift($args, $rule);
+                    }
+
+                    \call_fuel_func_array([$field, 'add_rule' ], $args);
+                }
+            }
+        }
+        return $fieldset;
     }
 
 }
