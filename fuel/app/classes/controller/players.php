@@ -1,8 +1,8 @@
 <?php
+
 namespace Controller;
 
-class Players extends \Controller\Base
-{
+class Players extends \Controller\Base {
 
     public function action_index() {
         //TODO add functionality for old links
@@ -28,8 +28,8 @@ class Players extends \Controller\Base
                 \Response::redirect('players');
             }
         } else {
-            
-            
+
+
             $this->template->title = "Search Players";
             $this->template->content = \View::forge('players/index');
         }
@@ -39,7 +39,6 @@ class Players extends \Controller\Base
         is_null($id) and \Response::redirect('players');
         if (!$data = \Model\Players::view_player($id)) {
             \Session::set_flash('error', 'Could not find person');
-
         }
         if (!$data2['player_season_stats'] = \Model\Statistics::get_plr_season($id)) {
             \Session::set_flash('error', 'Could not find Stats');
@@ -52,4 +51,5 @@ class Players extends \Controller\Base
         $this->template->content2 = \View::forge('stats/player', ['stats' => $data2]);
         $this->template->content3 = \View::forge('players/bio', ['story' => $data], false);
     }
+
 }

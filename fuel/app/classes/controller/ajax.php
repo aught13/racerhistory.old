@@ -20,8 +20,9 @@ class ajax extends \Controller\Base
         $data = \Model\Game::query()->related(['game_type', 'opponent', 'site'])->order_by('game_date', 'ASC')->get();
         
         $i=1;
-        
+
         foreach ($data as $item) {
+            
             $response[] = [
                 'num'       => $i,
                 'season'    => $item->season,
@@ -44,6 +45,6 @@ class ajax extends \Controller\Base
             
         }
         
-        return $response;
+        return $this->response($response);
     }
 }

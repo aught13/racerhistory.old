@@ -15,7 +15,7 @@ namespace Controller;
 class index extends \Controller\Base 
 {
     public function action_index() {
-        $this->template->title = "Landing Page";
+        $this->template->title = "Racerhistory.com";
         $this->template->content = \View::forge('welcome/index');
 
     }

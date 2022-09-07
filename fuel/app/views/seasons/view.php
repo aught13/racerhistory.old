@@ -44,7 +44,7 @@ $gp=0; $points=0; $conf=0;
 
     </tbody>
 </table>
-
+<?= (!$current_user ? '' : \Html::anchor('admin/game/create/'.(is_object($season_info) ? $season_info->season_identifier : ''), 'Add Game', array('class' => 'w3-button'))); ?>
 <?php if ($games): ?>
 
 <table id="games" class="display compact w3-small">
@@ -89,6 +89,8 @@ $gp=0; $points=0; $conf=0;
             </td>
             <td>
                 <?= \Html::anchor('games/view/'.$item->id, '<i class="fa fa-eye"></i>', array('class' => 'w3-small')); ?>
+                <?= (!$current_user ? '' : \Html::anchor('admin/game/edit/'.$item->id, '<i class="fa fa-pencil"></i>', ['class' => 'w3-small, w3-green'])); ?>
+                <?= (!$current_user ? '' : \Html::anchor('admin/game/delete/'.$item->id, '<i class="fa fa-trash"></i>', ['onclick' => "return confirm('Are you sure?')", 'class' => 'w3-small, w3-red'])); ?>
             </td>
         </tr>
         <?php endforeach; ?>

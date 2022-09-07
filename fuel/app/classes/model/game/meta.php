@@ -44,10 +44,10 @@ class Meta extends \Orm\Model
 	protected static $_belongs_to = [
             'game' => [
                 'key_from' => 'game_id',
-                'model_to' => 'Model_Game',
+                'model_to' => '\Model\Game',
                 'key_to' => 'id',
                 'cascade_save' => true,
-                'cascade_delete' => false,
+                'cascade_delete' => true,
             ]
 	];
 

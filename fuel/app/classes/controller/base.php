@@ -27,6 +27,18 @@ class Base extends \Fuel\Core\Controller_Hybrid
 			}
 			break;
 		}
+                
+                if (\Request::active()->controller == 'Controller\Admin' and !in_array(\Request::active()->action, ['login', 'logout'])) {
+                    if (\Auth::check()) {
+                        $admin_group_id = \Config::get('auth.driver', 'Simpleauth') == 'Ormauth' ? 6 : 100;
+                        if (!\Auth::member($admin_group_id)) {
+                            \Session::set_flash('error', e('You don\'t have access to the admin panel'));
+                            \Response::redirect('/');
+                        }
+                    } elseif (!\Auth::check()) {
+                        \Response::redirect('/');
+                    } 
+                }
 
 		// Set a global variable so views can use it
 		\View::set_global('current_user', $this->current_user);

@@ -31,9 +31,9 @@ class Seasons extends \Controller\Base
      * 
      * @param int $id Season Id to be searched by
      */
-    public function action_view($id = null)	{
+    public function action_view($id = null) {
         is_null($id) and \Response::redirect('seasons');
-
+        
         if ( ! $data = \Model\Season::get_season_info($id)) 
         {
             \Session::set_flash('error', 'Could not find season_info #'.$id);
@@ -53,7 +53,7 @@ class Seasons extends \Controller\Base
         $nav['season'] = intval($id);
         $this->template->title = "";
         $this->template->sidenav = \View::forge('seasons/sidenav', $nav);
-        $this->template->content = \View::forge('seasons/view', ['record' => $record , 'season_info' => $data, 'games' => $games ]);
+        $this->template->content = \View::forge('seasons/view', ['record' => $record , 'season_info' => $data, 'games' => $games]);
     }
 
 }

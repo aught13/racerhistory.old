@@ -33,5 +33,7 @@ desktop.ini
 /fuel/app/config/crypt.php
 /nbproject/private/
 /nbproject
-/fuel/app/views/admin/
-/fuel/app/classes/controller/admin/
+<<<<<<< HEAD
+=======
+
+>>>>>>> 788f429 (created index controller for landing page)

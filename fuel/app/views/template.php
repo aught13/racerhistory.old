@@ -10,19 +10,28 @@
     <?= Asset::css('w3.css'); ?>
     <?= Asset::css('datatables.css'); ?>
     <?= Asset::js('datatables.min.js'); ?>
+    <?= ($title == ('New Post' || 'Edit Post') ? Asset::js(['https://cdn.tiny.cloud/1/6x4xhucgxq3bhx4mezzzt3t3x1znsfxw9m5wtkdwbt7vk1oc/tinymce/6/tinymce.min.js',], ['referrerpolicy' => 'origin']) : ''); ?>
 
 </head>
 
 <body>
     <nav id="topNav" class="w3-top racer-gold">
-        <div class="w3-bar w3-large w3-auto">
+        <div class="w3-auto w3-bar w3-large">
             <a id="scroll" class="w3-bar-item w3-button w3-hide" href="/"><img class=""
                     style="width: 100%; max-width: 540px; height: 100%; max-height: 29px" alt="Racerhistory.com"
                     src="/assets/img/logo.png"></img></a></li>
-            <a class="w3-bar-item w3-hide-small w3-button" href="/players">PLAYERS</a></li>
-            <a class="w3-bar-item w3-hide-small w3-button" href="/seasons">SEASONS</a></li>
-            <a class="w3-bar-item w3-hide-small w3-button" href="/stats">STATS</a></li>
-            <a class="w3-bar-item w3-hide-small w3-button" href="/games">GAMES</a>
+            <a class="w3-bar-item w3-hide-small w3-button" href="<?= (($current_user) ? '/admin' : ''); ?>/players">PLAYERS</a>
+            <a class="w3-bar-item w3-hide-small w3-button" href="<?= (($current_user) ? '/admin' : ''); ?>/seasons">SEASONS</a>
+            <a class="w3-bar-item w3-hide-small w3-button" href="<?= (($current_user) ? '/admin' : ''); ?>/stats">STATS</a>
+            <a class="w3-bar-item w3-hide-small w3-button" href="<?= (($current_user) ? '/admin' : ''); ?>/games">GAMES</a>
+            <?php if ($current_user) : ?>
+            <div class="w3-dropdown-hover">
+                <button  class="w3-button" href="#"><?=Inflector::words_to_upper($current_user->username);?></button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4 racer-gold">
+                    <?= Html::anchor('admin/logout', 'Logout', ['class' => 'w3-bar-item w3-button']); ?>
+                </div>
+            </div>
+            <?php endif; ?>
             <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
                 onclick="dropNav()">&#9776;</a>
         </div>
@@ -83,6 +92,18 @@
                 </div>
                 <?php endif; ?>
                 <div class="w3-row w3-white">
+                    <?php if (($title == 'New Post') || ($title == 'Edit Post')):?>
+                    <script>
+                        tinymce.init({
+                            selector: 'textarea',
+                            plugins: ' advlist autolink lists link image charmap preview anchor pagebreak media table ',
+                            toolbar: 'link image media table charmap fontfamily fontsize forecolor backcolor bold italic underline strikethrough subscript superscript alignleft aligncenter alignright alignjustify blockquote hr',
+                            toolbar_mode: 'floating',
+                            tinycomments_mode: 'embedded',
+                            tinycomments_author: 'Author name',
+                        });
+                    </script>
+                    <?php endif; ?>
                     <?= $content; ?>
                     <?= (isset($content2) ? $content2 : ""); ?>
                     <?= (isset($content3) ? $content3 : ""); ?>

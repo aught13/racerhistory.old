@@ -45,7 +45,14 @@ class Season extends \Orm\Model
                 'key_to' => 'season',
                 'cascade_save' => true,
                 'cascade_delete' => false,
-            ]
+            ],
+            'team_season_post' => [
+                'key_from' => 'id',
+                'model_to' => '\Model\Team\Season\Post',
+                'key_to' => 'season_id',
+                'cascade_save' => true,
+                'cascade_delete' => false,                
+            ],
 	];
 
 	protected static $_many_many = [

@@ -115,6 +115,7 @@ $(document).ready(function() {
                 targets: 0,
             }
         ],
+        order: [[ 2, 'desc' ]],
         select: {
             style: 'multi'
         },
