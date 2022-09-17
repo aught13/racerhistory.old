@@ -20,6 +20,10 @@ class Opponent extends \Orm\Model
 			"label" => "Opponent current",
 			"data_type" => "int",
 		],
+		"opponent_short" => [
+			"label" => "Opponent ABBR",
+			"data_type" => "varchar",
+		],
         'created_at' => [
             'data_type' => 'timestamp',
             'label' => 'Created',

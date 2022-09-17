@@ -13,37 +13,52 @@
 //Declare counters
 $gp=0; $points=0; $conf=0;
 ?>
+<?php if (is_object($record)): ?>
+<?php foreach ($record as $item): ?>
 <table id="summary" class="nowrap">
-    <thead class="">
+    <thead>
         <tr>
             <th>Season</th>
             <th>Overall</th>
-            <th>Home</th>
-            <th>Road</th>
-            <th>Neutral</th>
-            <th>Conference</th>
+            <th class="w3-hide-small">Home</th>
+            <th class="w3-hide-small">Road</th>
+            <th class="w3-hide-small">Neutral</th>
+            <th><span class="w3-hide-small">Conference</span><span class="w3-hide-medium w3-hide-large">Conf</span></th>
             <th>Finish</th>
         </tr>
     </thead>
     <tbody>
-        <?php if (is_object($record)): ?>
-        <?php foreach ($record as $item): ?>
         <tr>
             <td>
                 <?= (is_object($season_info) ? (($season_info->season_identifier-1).' - '.$season_info->season_identifier):""); ?> 
             </td>
             <td><?= $item->wins.'-'.$item->losses; ?></td>
-            <td><?= $item->homew.'-'.$item->homel; ?></td>
-            <td><?= $item->roadw.'-'.$item->roadl; ?></td>
-            <td><?= $item->neuw.'-'.$item->neul; ?></td>
+            <td class="w3-hide-small"><?= $item->homew.'-'.$item->homel; ?></td>
+            <td class="w3-hide-small"><?= $item->roadw.'-'.$item->roadl; ?></td>
+            <td class="w3-hide-small"><?= $item->neuw.'-'.$item->neul; ?></td>
             <td><?= $item->confw.'-'.$item->confl; ?></td>
             <td><?= $item->fin; ?></th>
         </tr>
-        <?php endforeach; ?>
-        <?php endif; ?>
-
+    </tbody>
+</table>    
+<table id="msummary" class="nowrap w3-hide-medium w3-hide-large">
+    <thead>        
+        <tr class="w3-hide-medium w3-hide-large">
+            <th>Home</th>
+            <th>Road</th>
+            <th>Neutral</th>
+        </tr>
+    </thead>
+    <tbody>    
+        <tr class="w3-hide-medium w3-hide-large">
+            <td><?= $item->homew.'-'.$item->homel; ?></td>
+            <td><?= $item->roadw.'-'.$item->roadl; ?></td>
+            <td><?= $item->neuw.'-'.$item->neul; ?></td>
+        </tr>
     </tbody>
 </table>
+<?php endforeach; ?>
+<?php endif; ?>
 <?= (!$current_user ? '' : \Html::anchor('admin/game/create/'.(is_object($season_info) ? $season_info->season_identifier : ''), 'Add Game', array('class' => 'w3-button'))); ?>
 <?php if ($games): ?>
 
@@ -52,28 +67,27 @@ $gp=0; $points=0; $conf=0;
         <tr>
             <th>Game date</th>
             <th>Opponent</th>
-            <th>Location</th>
+            <th class="w3-hide-small">Location</th>
             <th>W/L</th>
             <th>Score</th>
-            <th>Info</th>
+            <th class="w3-hide-small">Info</th>
             <th>&nbsp;</th>
         </tr>
     </thead>
     <tbody>
         <?php  foreach ($games as $item): ?>
-        <?php  $points += $item->pts_mur; $gp += 1;?> </pre>
+        <?php  $points += $item->pts_mur; $gp += 1;?>
         <tr>
-            <td style="white-space: nowrap">
-                <?= date_format(date_create($item->game_date), 'F d, Y'); ?>
+            <td style="white-space: nowrap"><span class="w3-hide-small"><?= date_format(date_create($item->game_date), 'F d, Y'); ?></span><span class="w3-hide-medium w3-hide-large"><?= date_format(date_create($item->game_date), 'n/j/Y'); ?></span>                
             </td>
             <td style="white-space: nowrap">
-                <?= (isset($item->mur_rank) ? '#'.$item->mur_rank.' ' : '');?>Murray St
-                <?= (($item->hrn == 1) || ($item->hrn == 3) ? ' vs ': ' @ '); ?>
+                <?= (isset($item->mur_rank) ? '#'.$item->mur_rank.' ' : '');?><span class="w3-hide-small">Murray St</span>
+                <?= (($item->hrn == 1) || ($item->hrn == 3) ? ' VS ': ' @ '); ?>
                 <?= (isset($item->opp_rank) ? '#'.$item->opp_rank.' ': ''); ?>
-                <?= $item->opponent->opponent_name; ?>
+                <span class="w3-hide-small"><?= $item->opponent->opponent_name; ?></span><span class="w3-hide-medium w3-hide-large"><?= $item->opponent->opponent_short; ?></span>
                 <?= (isset($item->game_type->conf) ? (($item->game_type->conf == 1 && $conf=1) ? "*" : "") : ""); ?>
             </td>
-            <td style="white-space: nowrap">
+            <td style="white-space: nowrap" class="w3-hide-small">
                 <?=$item->site->site_name.', '.$item->site->site_state ?>
             </td>
             <td>
@@ -81,9 +95,9 @@ $gp=0; $points=0; $conf=0;
             </td>
             <td style="white-space: nowrap">
                 <?= $item->pts_mur.'-'.$item->pts_opp ?>
-                <?= (isset($item->overtime) ? ($item->overtime > 1 ? " ".$item->overtime : " OT") : "" );?>
+                <span class="w3-hide-small"><?= (isset($item->overtime) ? ($item->overtime > 1 ? " ".$item->overtime : " OT") : "" );?></span>
             </td>
-            <td>
+            <td class="w3-hide-small">
                 <?= (isset($item->game_type->conf) ? ($item->game_type->conf != 1 ? $item->game_type->game_type_name.' ' : "") : ""); ?>
                 <?= (isset($item->notes) ? $item->notes : ""); ?>
             </td>
@@ -96,7 +110,7 @@ $gp=0; $points=0; $conf=0;
         <?php endforeach; ?>
     </tbody>
 </table>
-<?= ($conf === 1 ? '<p class="w3-right w3-small"> * Conference Game </p>' : "");?>
+<span><?= ($conf === 1 ? '<p class="w3-right w3-small"> * Conference Game </p>' : "");?></span>
 <?php else: ?>
 <p>No Games.</p>
 
@@ -109,27 +123,27 @@ $gp=0; $points=0; $conf=0;
         <tr>
             <th>Name</th>
             <th>GP</th>
-            <th>GS</th>
-            <th>MP</th>
+            <th class="w3-hide-small">GS</th>
+            <th class="w3-hide-small">MP</th>
             <th>FGM</th>
-            <th>FGA</th>
-            <th>FG%</th>
+            <th class="w3-hide-small">FGA</th>
+            <th class="w3-hide-small">FG%</th>
             <th>3PM</th>
-            <th>3PA</th>
-            <th>3P%</th>
+            <th class="w3-hide-small">3PA</th>
+            <th class="w3-hide-small">3P%</th>
             <th>FTM</th>
-            <th>FTA</th>
-            <th>FT%</th>
-            <th>ORB</th>
-            <th>DRB</th>
+            <th class="w3-hide-small">FTA</th>
+            <th class="w3-hide-small">FT%</th>
+            <th class="w3-hide-small">ORB</th>
+            <th class="w3-hide-small">DRB</th>
             <th>RB</th>
-            <th>PF</th>
+            <th class="w3-hide-small">PF</th>
             <th>AS</th>
-            <th>TO</th>
+            <th class="w3-hide-small">TO</th>
             <th>BL</th>
             <th>ST</th>
             <th>PTS</th>
-            <th>PPG</th>
+            <th class="w3-hide-small">PPG</th>
         </tr>
     </thead>
     <tbody>
@@ -137,54 +151,54 @@ $gp=0; $points=0; $conf=0;
         <tr>
             <td><?= $item->person->first.' '.$item->person->last; ?></td>
             <td><?= $item->GP; ?></td>
-            <td><?= $item->GS; ?></td>
-            <td><?= $item->MIN; ?></td>
+            <td class="w3-hide-small"><?= $item->GS; ?></td>
+            <td class="w3-hide-small"><?= $item->MIN; ?></td>
             <td><?= $item->FGM; ?></td>
-            <td><?= $item->FGA; ?></td>
-            <td><?= ($item->FGA > 0 ? number_format(($item->FGM/$item->FGA),3,'.','') : ""); ?></td>
+            <td class="w3-hide-small"><?= $item->FGA; ?></td>
+            <td class="w3-hide-small"><?= ($item->FGA > 0 ? number_format(($item->FGM/$item->FGA),3,'.','') : ""); ?></td>
             <td><?= $item->TPM; ?></td>
-            <td><?= $item->TPA; ?></td>
-            <td><?= ($item->TPA > 0 ? number_format(($item->TPM/$item->TPA),3,'.','') : ""); ?></td>
+            <td class="w3-hide-small"><?= $item->TPA; ?></td>
+            <td class="w3-hide-small"><?= ($item->TPA > 0 ? number_format(($item->TPM/$item->TPA),3,'.','') : ""); ?></td>
             <td><?= $item->FTM; ?></td>
-            <td><?= $item->FTA; ?></td>
-            <td><?= ($item->FTA > 0 ? number_format(($item->FTM/$item->FTA),3,'.','') : ""); ?></td>
-            <td><?= $item->ORB; ?></td>
-            <td><?= $item->DRB; ?></td>
+            <td class="w3-hide-small"><?= $item->FTA; ?></td>
+            <td class="w3-hide-small"><?= ($item->FTA > 0 ? number_format(($item->FTM/$item->FTA),3,'.','') : ""); ?></td>
+            <td class="w3-hide-small"><?= $item->ORB; ?></td>
+            <td class="w3-hide-small"><?= $item->DRB; ?></td>
             <td><?= $item->RB; ?></td>
-            <td><?= $item->PF; ?></td>
+            <td class="w3-hide-small"><?= $item->PF; ?></td>
             <td><?= $item->AST; ?></td>
-            <td><?= $item->TRN; ?></td>
+            <td class="w3-hide-small"><?= $item->TRN; ?></td>
             <td><?= $item->BLK; ?></td>
             <td><?= $item->STL; ?></td>
             <td><?= $item->PTS; ?></td>
-            <td><?= ($item->GP > 0 ? number_format(($item->PTS/$item->GP),2,'.','') : ""); ?></td>
+            <td class="w3-hide-small"><?= ($item->GP > 0 ? number_format(($item->PTS/$item->GP),2,'.','') : ""); ?></td>
         </tr>
         <?php endforeach; ?>
     </tbody>
     <tr>
         <td>TEAM</td>
         <td><?= $gp; ?></td>
-        <td></td>
-        <td><?= $season_info->season_total_stats->MIN; ?></td>
+        <td class="w3-hide-small"></td>
+        <td class="w3-hide-small"><?= $season_info->season_total_stats->MIN; ?></td>
         <td><?= $season_info->season_total_stats->FGM; ?></td>
-        <td><?= $season_info->season_total_stats->FGA; ?></td>
-        <td><?= (isset($season_info->season_total_stats->FGP) ? number_format($season_info->season_total_stats->FGP,3,'.','') : "-");?></td>
+        <td class="w3-hide-small"><?= $season_info->season_total_stats->FGA; ?></td>
+        <td class="w3-hide-small"><?= (isset($season_info->season_total_stats->FGP) ? number_format($season_info->season_total_stats->FGP,3,'.','') : "-");?></td>
         <td><?= $season_info->season_total_stats->TPM; ?></td>
-        <td><?= $season_info->season_total_stats->TPA; ?></td>
-        <td><?= (isset($season_info->season_total_stats->TPP) ? number_format($season_info->season_total_stats->TPP,3,'.','') : "-");?></td>
+        <td class="w3-hide-small"><?= $season_info->season_total_stats->TPA; ?></td>
+        <td class="w3-hide-small"><?= (isset($season_info->season_total_stats->TPP) ? number_format($season_info->season_total_stats->TPP,3,'.','') : "-");?></td>
         <td><?= $season_info->season_total_stats->FTM; ?></td>
-        <td><?= $season_info->season_total_stats->FTA; ?></td>
-        <td><?= (isset($season_info->season_total_stats->FTP) ? number_format($season_info->season_total_stats->FTP,3,'.','') : "-");?></td>
-        <td><?= $season_info->season_total_stats->ORB; ?></td>
-        <td><?= $season_info->season_total_stats->DRB; ?></td>
+        <td class="w3-hide-small"><?= $season_info->season_total_stats->FTA; ?></td>
+        <td class="w3-hide-small"><?= (isset($season_info->season_total_stats->FTP) ? number_format($season_info->season_total_stats->FTP,3,'.','') : "-");?></td>
+        <td class="w3-hide-small"><?= $season_info->season_total_stats->ORB; ?></td>
+        <td class="w3-hide-small"><?= $season_info->season_total_stats->DRB; ?></td>
         <td><?= $season_info->season_total_stats->RB; ?></td>
-        <td><?= $season_info->season_total_stats->PF; ?></td>
+        <td class="w3-hide-small"><?= $season_info->season_total_stats->PF; ?></td>
         <td><?= $season_info->season_total_stats->AST; ?></td>
-        <td><?= $season_info->season_total_stats->TRN; ?></td>
+        <td class="w3-hide-small"><?= $season_info->season_total_stats->TRN; ?></td>
         <td><?= $season_info->season_total_stats->BLK; ?></td>
         <td><?= $season_info->season_total_stats->STL; ?></td>
         <td><?= $points; ?></td>
-        <td><?= ($gp>0 ? number_format(($points/$gp),2,'.','') : "");?></td>
+        <td class="w3-hide-small"><?= ($gp>0 ? number_format(($points/$gp),2,'.','') : "");?></td>
         </td>
     </tr>
 
@@ -200,6 +214,19 @@ $gp=0; $points=0; $conf=0;
 <script>
 $(document).ready(function() {
     $('#summary').DataTable({
+        "dom": 'tr',
+        "searching": false,
+        "order": [],
+        "paging": false,
+        "ordering": false,
+        "columnDefs": [{
+            "className": 'dt-center',
+            "targets": '_all'
+        }]
+    });
+});
+$(document).ready(function() {
+    $('#msummary').DataTable({
         "dom": 'tr',
         "searching": false,
         "order": [],

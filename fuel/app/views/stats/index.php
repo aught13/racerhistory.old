@@ -16,6 +16,7 @@ $current = date("Y");
 
 <div class="table_container">
 <h2>Listing <?= (isset($flag) ? 'Career Statistics' : 'Individual Season Statistics'); ?></h2>
+    <div class="w3-responsive">
     <table id="stats" class="cell-border compact hover order-column nowrap stats_table w3-hide">
         <thead>
             <tr>
@@ -93,6 +94,7 @@ $current = date("Y");
             <?php endforeach; ?>
         </tbody>
     </table>
+    </div>
 </div>
 <?php else: ?>
 <p>Something went wrong</p>
