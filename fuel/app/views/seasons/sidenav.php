@@ -22,7 +22,7 @@ $next=$season+1;
     <a href="/seasons/view/<?=$from; ?>" class="w3-bar-item w3-btn">First | </a>
     <a href="/seasons/view/<?=$prev; ?>" class="w3-bar-item w3-btn"><?=$prev; ?> << </a>
             <?php endif; ?>
-            <a href="/seasons/" class="w3-bar-item w3-btn">All Seasons</a>
+            <a href="/seasons/" class="w3-bar-item w3-btn"><span class="w3-hide-small">All Seasons</span><span class="w3-hide-medium w3-hide-large">All</span></a>
             <?php if($max==0): ?>
             <a href="/seasons/view/<?=$next; ?>" class="w3-bar-item w3-btn"> >> <?=$next; ?></a>
             <a href="/seasons/view/<?=$till; ?>" class="w3-bar-item w3-btn"> | Current</a>

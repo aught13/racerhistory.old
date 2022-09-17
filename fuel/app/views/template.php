@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" name="viewport" content="width=600, initial-scale=1">
     <link rel="shortcut icon" href="https://racerhistory.com/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title><?= $title; ?></title>
@@ -33,12 +33,13 @@
             </div>
             <?php endif; ?>
             <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
-                onclick="dropNav()">&#9776;</a>
+                onclick="dropNav()">MENU&#9776;</a>
         </div>
         <div id="navdrop" class="w3-bar-block racer-gold w3-hide w3-hide-large w3-hide-medium">
-            <a href="/players" class="w3-bar-item w3-button">PLAYERS</a>
-            <a href="/seasons" class="w3-bar-item w3-button">SEASONS</a>
-            <a href="/stat" class="w3-bar-item w3-button">STATS</a>
+            <a href="/players" class="w3-bar-item w3-button w3-center">PLAYERS</a>
+            <a href="/seasons" class="w3-bar-item w3-button w3-center">SEASONS</a>
+            <a href="/stats" class="w3-bar-item w3-button w3-center">STATS</a>
+            <a href="/games" class="w3-bar-item w3-button w3-center">GAMES</a>
         </div>
     </nav>
 
@@ -63,18 +64,7 @@
     <?php endif; ?>
     <div class="racer-grey w3-row w3-container">
         <div class="w3-auto">
-            <div class="w3-right racer-grey w3-card w3-col l2 m12 s12">
-                <div>
-                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!--                     Leaderboard -->
-                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6903556731799787"
-                        data-ad-slot="9814065751" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                    <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                </div>
-            </div>
-            <div class="w3-left w3-row-padding w3-col l10 m12 s12">
+            <div class="w3-left w3-col l10 m12 s12">
                 <?php if (\Session::get_flash('success')): ?>
                 <div class="alert alert-success">
                     <strong>Success</strong>
@@ -108,6 +98,17 @@
                     <?= (isset($content2) ? $content2 : ""); ?>
                     <?= (isset($content3) ? $content3 : ""); ?>
                     <?= (isset($content4) ? $content4 : ""); ?>
+                </div>
+            </div>
+                        <div class="w3-right racer-grey w3-card w3-col l2 m12 s12">
+                <div>
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!--                     Leaderboard -->
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6903556731799787"
+                        data-ad-slot="9814065751" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                    <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
                 </div>
             </div>
         </div>

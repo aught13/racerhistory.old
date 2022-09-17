@@ -19,10 +19,10 @@
         <tr>
             <th>Season</th>
             <th>Record</th>
-            <th>Home</th>
-            <th>Road</th>
-            <th>Neutral</th>
-            <th>Conference</th>
+            <th class="w3-hide-small">Home</th>
+            <th class="w3-hide-small">Road</th>
+            <th class="w3-hide-small">Neutral</th>
+            <th><span class="w3-hide-small">Conference</span><span class="w3-hide-medium w3-hide-large">Conf</span></th>
             <th>Finish</th>
             <th>&nbsp;</th>
         </tr>
@@ -32,9 +32,9 @@
         <tr>
             <td><?php echo $start.'-'.$item->season; ?></td>
             <td><?php echo $item->wins.'-'.$item->losses; ?></td>
-            <td><?php echo $item->homew.'-'.$item->homel; ?></td>
-            <td><?php echo $item->roadw.'-'.$item->roadl; ?></td>
-            <td><?php echo $item->neuw.'-'.$item->neul; ?></td>
+            <td class="w3-hide-small"><?php echo $item->homew.'-'.$item->homel; ?></td>
+            <td class="w3-hide-small"><?php echo $item->roadw.'-'.$item->roadl; ?></td>
+            <td class="w3-hide-small"><?php echo $item->neuw.'-'.$item->neul; ?></td>
             <td><?php echo $item->confw.'-'.$item->confl; ?></td>
             <td><?php echo $item->fin; ?></th>
             <td>
