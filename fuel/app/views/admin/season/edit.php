@@ -3,6 +3,6 @@
 
 <div class="row">
 	<div class="col-md-6">
-		<?php echo render('admin/team/season/_form'); ?>
+		<?php echo render('admin/season/_form'); ?>
 	</div>
 </div>
