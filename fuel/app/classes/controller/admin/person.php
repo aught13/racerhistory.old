@@ -8,7 +8,7 @@ class Person extends \Controller\Admin
 	{
 		$query = \Model\Person::query();
 
-		$pagination = Pagination::forge('people_pagination', [
+		$pagination = \Pagination::forge('people_pagination', [
 			'total_items' => $query->count(),
 			'uri_segment' => 'page',
 		]);
@@ -20,34 +20,34 @@ class Person extends \Controller\Admin
 		$this->template->set_global('pagination', $pagination, false);
 
 		$this->template->title   = "People";
-		$this->template->content = View::forge('admin/person/index', $data);
+		$this->template->content = \View::forge('admin/person/index', $data);
 	}
 
 	public function action_view($id = null)
 	{
-		$data['person'] = Model\Person::find($id);
+		$data['person'] = \Model\Person::find($id);
 
 		$this->template->title = "Person";
-		$this->template->content = View::forge('admin/person/view', $data);
+		$this->template->content = \View::forge('admin/person/view', $data);
 
 	}
 
 	public function action_create()
 	{
-		if (Input::method() == 'POST')
+		if (\Input::method() == 'POST')
 		{
-			$val = Model\Person::validate('create');
+			$val = \Model\Person::validate('create');
 
 			if ($val->run())
 			{
-				$person = Model\Person::forge([
-					'id' => Input::post('id'),
-					'first' => Input::post('first'),
-					'last' => Input::post('last'),
-					'nick' => Input::post('nick'),
-					'photo' => Input::post('photo'),
-					'submitted_date' => Input::post('submitted_date'),
-					'updated_date' => Input::post('updated_date'),
+				$person = \Model\Person::forge([
+					'id' => \Input::post('id'),
+					'first' => \Input::post('first'),
+					'last' => \Input::post('last'),
+					'nick' => \Input::post('nick'),
+					'photo' => \Input::post('photo'),
+					'submitted_date' => \Input::post('submitted_date'),
+					'updated_date' => \Input::post('updated_date'),
 				]);
 
 				if ($person and $person->save())
@@ -69,7 +69,7 @@ class Person extends \Controller\Admin
 		}
 
 		$this->template->title = "People";
-		$this->template->content = View::forge('admin/person/create');
+		$this->template->content = \View::forge('admin/person/create');
 
 	}
 
