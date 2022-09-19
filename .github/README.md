@@ -1,6 +1,6 @@
 # Racerhistory.com
 
-- Version: 1.6
+- Version: 1.7.dev
 - [Racerhistory.com](https://new.racerhistory.com/)
 
 ## Description
