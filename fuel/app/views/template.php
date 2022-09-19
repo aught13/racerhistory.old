@@ -17,7 +17,7 @@
 <body>
     <nav id="topNav" class="w3-top racer-gold">
         <div class="w3-auto w3-bar w3-large">
-            <a id="scroll" class="w3-bar-item w3-button w3-hide" href="/"><img class=""
+            <a id="scroll" class="w3-bar-item w3-button w3-hide" href="<?= (($current_user) ? '/admin' : ''); ?>/"><img class=""
                     style="width: 100%; max-width: 540px; height: 100%; max-height: 29px" alt="Racerhistory.com"
                     src="/assets/img/logo.png"></img></a></li>
             <a class="w3-bar-item w3-hide-small w3-button" href="<?= (($current_user) ? '/admin' : ''); ?>/players">PLAYERS</a>
@@ -47,7 +47,7 @@
         <div class="w3-auto">
 
             <div class="">
-                <a href="/"><img class="" style="width: 100%; max-width: 540px; height: 100%; max-height: 90px"
+                <a href="<?= (($current_user) ? '/admin' : ''); ?>/"><img class="" style="width: 100%; max-width: 540px; height: 100%; max-height: 90px"
                         alt="Racerhistory.com" src="/assets/img/logo.png"></img></a>
                 <!-- Record Row -->
             </div>
