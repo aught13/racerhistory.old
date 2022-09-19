@@ -27,8 +27,6 @@
 					<th>TRN</th>
 					<th>PF</th>
 					<th>PTS</th>
-					<th>Submitted date</th>
-					<th>Updated date</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -57,8 +55,6 @@
 						<td><?php echo $item->TRN; ?></td>
 						<td><?php echo $item->PF; ?></td>
 						<td><?php echo $item->PTS; ?></td>
-						<td><?php echo $item->submitted_date; ?></td>
-						<td><?php echo $item->updated_date; ?></td>
 
 						<td>
 							<?php echo Html::anchor('admin/player/season/stat/view/'.$item->id, 'View'); ?> |
