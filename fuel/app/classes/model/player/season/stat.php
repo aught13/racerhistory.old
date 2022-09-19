@@ -33,7 +33,7 @@ class Stat extends \Orm\Model
 
 	public static function validate($factory)
 	{
-		$val = Validation::forge($factory);
+		$val = \Validation::forge($factory);
 		$val->add_field('id', 'Id', 'required|valid_string[numeric]');
 		$val->add_field('person_id', 'Person Id', 'required|valid_string[numeric]');
 		$val->add_field('season_id', 'Season Id', 'required|valid_string[numeric]');
