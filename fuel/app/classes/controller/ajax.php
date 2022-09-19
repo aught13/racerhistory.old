@@ -45,6 +45,6 @@ class ajax extends \Controller\Base
             
         }
         
-        return $this->response($response);
+        return $this->response($response, $http_code=200);
     }
 }
