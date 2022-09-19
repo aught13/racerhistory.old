@@ -19,7 +19,7 @@ class Season extends \Orm\Model {
 
     protected static $_properties = [
         'id',
-        'season_id' => [
+        'identifier' => [
             'data_type' => 'number',
             'label' => 'Season',
             'form' => ['type' => 'select', 'class' => 'form-control'],
@@ -52,9 +52,28 @@ class Season extends \Orm\Model {
         'Orm\Observer_CreatedAt' => ['events' => ['before_insert'], 'mysql_timestamp' => true],
         'Orm\Observer_UpdatedAt' => ['events' => ['before_save'], 'mysql_timestamp' => true],
     ];
-    protected static $_table_name = 'season';
+    
+    public static function validate($factory)
+    {
+            $val = \Validation::forge($factory);
+            $val->add_field('identifier', 'Identifier ', 'required|valid_string[numeric]');
+            $val->add_field('start', 'Year Start', 'required|valid_string[numeric]');
+            $val->add_field('end', 'Year End', 'required|valid_string[numeric]');
+
+            return $val;
+    }
+        
+    protected static $_table_name = 'seasons';
     protected static $_primary_key = ['id'];
-    protected static $_has_many = [];
+    protected static $_has_many = [
+        'team_season' => [
+                'key_from' => 'identifier',
+                'model_to' => '\Model\Team\Season',
+                'key_to' => 'season_identifier',
+                'cascade_save' => true,
+                'cascade_delete' => false,
+            ],
+    ];
     protected static $_many_many = [];
     protected static $_has_one = [];
     protected static $_belongs_to = [];

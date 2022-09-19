@@ -1,11 +1,10 @@
 <br>
 
 <?php if ($season_infos): ?>
-    <div class="table-responsive">
-        <table class="table table-striped">
+    <div class="w3-responsive">
+        <table class="w3-table-all w3-small">
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Season</th>
                     <th>Fin</th>
                     <th>Notes</th>
@@ -19,7 +18,6 @@
             <tbody>
                 <?php foreach ($season_infos as $item): ?>
                     <tr>
-                        <td><?php echo $item->id; ?></td>
                         <td><?php echo $item->season_identifier; ?></td>
                         <td><?php echo $item->fin; ?></td>
                         <td><?php echo $item->notes; ?></td>
@@ -29,7 +27,7 @@
 
                         <td>
                             <?php echo Html::anchor('admin/team/season/view/' . $item->id, 'View'); ?> |
-                            <?php echo Html::anchor('admin/team/season/edit/' . $item->id, 'Edit'); ?> |
+                            <?php echo Html::anchor('admin/team/season/edit/' . $item->season_identifier, 'Edit'); ?> |
                             <?php echo Html::anchor('admin/team/season/delete/' . $item->id, 'Delete', array('onclick' => "return confirm('Are you sure?')")); ?>
                         </td>
                     </tr>

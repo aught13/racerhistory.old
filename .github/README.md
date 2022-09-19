@@ -1,6 +1,6 @@
 # Racerhistory.com
 
-- Version: 1.5
+- Version: 1.6
 - [Racerhistory.com](https://new.racerhistory.com/)
 
 ## Description
@@ -14,7 +14,7 @@ Racerhistory.com is being developed as an online repository for Murray State Uni
 ## Roadmap
 
 - Complete conversion of origonal site to fuelPHP -- complete with ver 1.0
-- Complete backend for new site -- In development
+- Complete backend for new site -- 90% complete with 1.6
 - Split out indivual sport sections from common parts and create modules
 - Add additional sports
 
