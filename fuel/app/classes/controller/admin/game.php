@@ -5,11 +5,11 @@ namespace Controller\Admin;
 class Game extends \Controller\Admin {
 
     private $error = [];
-    private $fields = [];    
+    private $fields = [];
     private $form_fields = [
         'season' => [
             'label' => 'Season',
-            'form' => ['type' => 'select','style' => 'width: 100px;border: none;'],
+            'form' => ['type' => 'select', 'style' => 'width: 100px;border: none;'],
             'validation' => ['required', 'numeric_between' => [1800, 2800]],
         ],
         'game_date' => [
@@ -55,7 +55,6 @@ class Game extends \Controller\Admin {
                 ],
                 'class' => 'w3-radio',
             ],
-            'validation' => ['required'],
         ],
         'periods' => [
             'label' => 'Periods',
@@ -89,7 +88,7 @@ class Game extends \Controller\Admin {
         'notes' => [
             'label' => 'notes',
             'form' => ['type' => 'text', 'style' => 'width: 400px;'],
-            'validation' => ['valid_string' => [['alpha','numeric','spaces','punctuation','dashes']]],
+            'validation' => ['valid_string' => [['alpha', 'numeric', 'spaces', 'punctuation', 'dashes']]],
         ],
         'attendance' => [
             'label' => 'Attendance',
@@ -122,63 +121,49 @@ class Game extends \Controller\Admin {
             'validation' => ['valid_string' => ['numeric']],
         ],
     ];
-    
+
     public function before() {
         parent::before();
-        if (!\Auth::check()){
+        if (!\Auth::check()) {
             \Response::redirect('/');
-        }            
+        }
     }
 
     public function action_create($season = null) {
-        $fieldset = \Fuel\Core\Fieldset::forge('game')->add_model('model\game')->repopulate();
-
+        $fieldset = \Fieldset::forge('game');
+        $fieldset = parent::set_fields($this->form_fields, $fieldset);
+        $fieldset->repopulate();
         $form = $fieldset->form();
         $new = $this->createNew($fieldset->validation()->input(), $form);
-
         $seasons = \Model\Team\Season::menuSeasons();
         $types = \Model\Game\Type::menuTypes();
         $opponent = \Model\Opponent::menuOpponent();
         $sites = \Model\Site::menuSites();
-
         (!$season ? $new->field('season')->set_options($seasons) : $new->field('season')->set_options([$season => $season]));
         $new->field('game_type_id')->set_options($types);
         $new->field('opponent_id')->set_options($opponent);
         $new->field('site_id')->set_options($sites);
         $new->add('submit', '', ['type' => 'submit', 'value' => 'Add', 'class' => 'btn medium primary']);
-
         if ($fieldset->validation()->run() == true) {
+            $game = new \Model\Game();
             $this->fields = $fieldset->validated();
-
-            if ($this->gameValidation($this->fields) == true) {
-
-                $game = new \Model\Game;
-                $game->season = $this->fields['season'];
-                $game->game_date = $this->fields['game_date'];
-                $game->game_type_id = $this->fields['game_type_id'];
-                $game->opponent_id = $this->fields['opponent_id'];
-                $game->site_id = $this->fields['site_id'];
-                $game->hrn = $this->fields['hrn'];
-                $game->post = $this->fields['post'];
-                $game->w = $this->fields['w'];
-                $game->l = $this->fields['l'];
-                $game->pts_mur = $this->fields['pts_mur'];
-                $game->pts_opp = $this->fields['pts_opp'];
-
-                if ($game->save()) {
-                    \Session::set_flash('success', e('Added game #' . $game->id . '.'));
-
-                    \Response::redirect('admin/game/edit/' . $game->id);
-                } else {
-                    \Session::set_flash('error', e('nope'));
+            $this->metaValidation($this->fields, $game);
+            $game->set($this->fields);
+            try {
+                $game->save();
+                if (!$this->error) {
+                    \Session::set_flash('error', e($this->error));
                 }
-            } else {
-                \Session::set_flash('error', e($this->error));
-            }           
+                \Session::set_flash('success', 'Game Saved');
+
+                \Response::redirect('admin/game/edit/' . $game->id);
+            } catch (Orm\ValidationFailed $e) {
+                \Session::set_flash('error', e($e->getMessage()));
+                \Response::redirect('admin/game/edit/' . $game->id, true);
+            }
         } else {
             \Session::set_flash('error', e($fieldset->validation()->error()));
         }
-
         $this->template->title = "New Game";
         $this->template->content = \View::forge('admin/game/create', ['form' => $new], false);
     }
@@ -192,11 +177,11 @@ class Game extends \Controller\Admin {
         } else {
             $game = \Model\Game::find($id, ['realted' => ['game_meta']]);
         }
-        
+
         $fieldset = \Fieldset::forge('game');
-        
+
         $fieldset = parent::set_fields($this->form_fields, $fieldset);
-        
+
         if (\Input::method() == 'POST') {
             $fieldset->repopulate();
         } else {
@@ -243,7 +228,7 @@ class Game extends \Controller\Admin {
         }
 
         $this->template->title = "Edit Game";
-        $this->template->content = \View::forge('admin/game/edit', ['form' => $new ,'game' => $game->id], false);
+        $this->template->content = \View::forge('admin/game/edit', ['form' => $new, 'game' => $game->id], false);
     }
 
     public function action_delete($id = null) {
@@ -308,7 +293,7 @@ class Game extends \Controller\Admin {
         }
         return $pass;
     }
-    
+
     /**
      * metaValidation()
      * 
@@ -319,11 +304,13 @@ class Game extends \Controller\Admin {
      * @param object($game)
      */
     private function metaValidation($param, $game) {
-        
+
         foreach ($param as $key => $value) {
             if (empty($value)) {
+                if ($key != 'post') {
                 unset($this->fields [$key]);
                 (isset($game->$key) ? \Model\Game\Meta::query()->where(['game_id' => $game->id, 'info_key' => $key])->delete() : '');
+                }
             }
         }
         // Set the w l Flags
@@ -332,7 +319,7 @@ class Game extends \Controller\Admin {
             $this->fields ['w'] = 0;
         } elseif ($param ['pts_opp'] < $param ['pts_mur']) {
             $this->fields ['l'] = 0;
-            $this->fields ['w'] = 1; 
+            $this->fields ['w'] = 1;
         } elseif (empty($param['pts_mur'])) {
             $this->fields ['l'] = 0;
             $this->fields ['w'] = 0;
@@ -343,5 +330,5 @@ class Game extends \Controller\Admin {
         unset($this->fields['submit']);
         unset($this->fields ['periods']);
     }
-        
+
 }
