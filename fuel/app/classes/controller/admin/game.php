@@ -9,7 +9,7 @@ class Game extends \Controller\Admin {
     private $form_fields = [
         'season' => [
             'label' => 'Season',
-            'form' => ['type' => 'select', 'style' => 'width: 100px;border: none;'],
+            'form' => ['type' => 'select','style' => 'width: 100px;border: none;'],
             'validation' => ['required', 'numeric_between' => [1800, 2800]],
         ],
         'game_date' => [
@@ -55,6 +55,7 @@ class Game extends \Controller\Admin {
                 ],
                 'class' => 'w3-radio',
             ],
+            'validation' => ['required'],
         ],
         'periods' => [
             'label' => 'Periods',
@@ -129,21 +130,21 @@ class Game extends \Controller\Admin {
         }
     }
 
-    public function action_create($season = null) {
+    public function action_create($season = null, $step = null) {
         $fieldset = \Fieldset::forge('game');
         $fieldset = parent::set_fields($this->form_fields, $fieldset);
         $fieldset->repopulate();
+        $this->fields = $fieldset->validated();
         $form = $fieldset->form();
-        $new = $this->createNew($fieldset->validation()->input(), $form);
-        $seasons = \Model\Team\Season::menuSeasons();
+        $seasons = \Model\Season::menuSeasons();
         $types = \Model\Game\Type::menuTypes();
         $opponent = \Model\Opponent::menuOpponent();
         $sites = \Model\Site::menuSites();
-        (!$season ? $new->field('season')->set_options($seasons) : $new->field('season')->set_options([$season => $season]));
-        $new->field('game_type_id')->set_options($types);
-        $new->field('opponent_id')->set_options($opponent);
-        $new->field('site_id')->set_options($sites);
-        $new->add('submit', '', ['type' => 'submit', 'value' => 'Add', 'class' => 'btn medium primary']);
+        (!$season ? $form->field('season')->set_options($seasons) : $form->field('season')->set_options([$season => $season]));
+        $form->field('game_type_id')->set_options($types);
+        $form->field('opponent_id')->set_options($opponent);
+        $form->field('site_id')->set_options($sites);
+        $form->add('submit', '', ['type' => 'submit', 'value' => 'Add', 'class' => 'btn medium primary']);
         if ($fieldset->validation()->run() == true) {
             $game = new \Model\Game();
             $this->fields = $fieldset->validated();
@@ -165,7 +166,7 @@ class Game extends \Controller\Admin {
             \Session::set_flash('error', e($fieldset->validation()->error()));
         }
         $this->template->title = "New Game";
-        $this->template->content = \View::forge('admin/game/create', ['form' => $new], false);
+        $this->template->content = \View::forge('admin/game/create', ['form' => $form], false);
     }
 
     public function action_edit($id = null) {
@@ -241,6 +242,19 @@ class Game extends \Controller\Admin {
         }
 
         \Response::redirect_back('', 'refresh');
+    }
+    
+    public function action_new($step = null) {
+        $fieldset = \Fieldset::forge('game');
+        $fieldset = parent::set_fields(["season" => $this->form_fields["season"]], $fieldset);
+        $fieldset->repopulate();
+        $form = $fieldset->form();
+        $seasons = \Model\Season::menuSeasons();
+        
+        $form->field('season')->set_options($seasons);
+        $form->add('submit', '', ['type' => 'submit', 'value' => 'Add', 'class' => 'btn medium primary']);
+        $this->template->title = "New Game";
+        $this->template->content = \View::forge('admin/game/new', ['form' => $form], false);
     }
 
     private function createNew($param, $form) {
